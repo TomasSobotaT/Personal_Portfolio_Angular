@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@use "bootstrap/dist/css/bootstrap.min.css";
+
+body {
+  margin: 0;
+  background: #0b1528;
+  min-height: 100vh;
+  color: #cbd5e1;
+  font-family: system-ui, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: var(--mouse-y, 50%);
+  left: var(--mouse-x, 50%);
+  width: 700px;
+  height: 700px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(120, 150, 200, 0.1) 0%,
+    rgba(120, 150, 200, 0) 70% 
+  );
+  z-index: 0;
+}
+
