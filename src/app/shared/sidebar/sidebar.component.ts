@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
+import { ScrollService } from '../../core/scroll.service';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [],
+  standalone: true,
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
+  currentYear = new Date().getFullYear();
 
+  constructor(private scrollService: ScrollService) {}
+
+  scrollTo(sectionId: string) {
+    this.scrollService.scrollTo(sectionId);
+  }
 }

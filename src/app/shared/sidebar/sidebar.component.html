@@ -1,1 +1,33 @@
-<p>sidebar works!</p>
+<div class="sidebar">
+  <!-- header / title nahoře -->
+  <header class="sidebar__header">
+    <h1 class="sidebar__name">Tomáš Sobota</h1>
+    <p class="sidebar__role">C# / ASP.NET & Angular developer</p>
+    <p class="sidebar__intro">Buduju webové aplikace, API a integrace.</p>
+  </header>
+
+  <!-- menu uprostřed -->
+  <nav class="sidebar__nav">
+    <ul class="sidebar__menu">
+      <li>
+        <button (click)="scrollTo('about')" class="sidebar__link">ABOUT</button>
+      </li>
+      <li>
+        <button (click)="scrollTo('experience')" class="sidebar__link">
+          EXPERIENCE
+        </button>
+      </li>
+      <li>
+        <button (click)="scrollTo('projects')" class="sidebar__link">
+          PROJECTS
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- footer dole -->
+  <footer class="sidebar__footer">
+    <!-- místo pro ikonky -->
+    <span>© {{ currentYear }} TS</span>
+  </footer>
+</div>

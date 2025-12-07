@@ -1,3 +1,10 @@
-<div class="container mt-5">
-  <router-outlet> </router-outlet>
+<div class="container shell">
+  <div class="row">
+    <aside class="col-6 shell__sidebar">
+      <app-sidebar></app-sidebar>
+    </aside>
+    <main class="col-6 shell__content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>

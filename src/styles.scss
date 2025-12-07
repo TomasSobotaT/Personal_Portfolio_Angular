@@ -1,4 +1,4 @@
-@use "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
 
 body {
   margin: 0;
@@ -8,6 +8,10 @@ body {
   font-family: system-ui, sans-serif;
   position: relative;
   overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+    color: #94a3b8;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
 }
 
 body::before {
@@ -22,9 +26,45 @@ body::before {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(120, 150, 200, 0.1) 0%,
+    rgba(120, 150, 200, 0.15) 0%,
     rgba(120, 150, 200, 0) 70% 
   );
   z-index: 0;
 }
 
+/* Nadpisy */
+h1, h2, h3, h4, h5 {
+  color: #e2e8f0;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Sekce malých odstavců */
+p {
+  color: #94a3b8;
+}
+
+/* Linky */
+a {
+  color: #e2e8f0;
+  text-decoration: none;
+
+
+}
+a:hover {
+  color: #58c492;
+    text-shadow: 0 0 12px rgba(112, 212, 149, 0.6);
+}
+
+.sidebar-item.active {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.sidebar-item {
+  color: #64748b;
+
+  &:hover {
+    color: #94a3b8;
+  }
+}

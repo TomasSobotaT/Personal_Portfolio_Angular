@@ -1,0 +1,17 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;          // zabere celou výšku
+}
+
+.sidebar__header {
+  margin-bottom: 3rem;
+}
+
+.sidebar__nav {
+  margin-bottom: 3rem;
+}
+
+.sidebar__footer {
+  margin-top: auto;       // tohle ho „odtlačí“ dolů
+}
