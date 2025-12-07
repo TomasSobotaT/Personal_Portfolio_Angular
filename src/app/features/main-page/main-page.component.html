@@ -40,7 +40,7 @@
 
 <section id="projects" data-section-id="projects" class="mb-5">
   <div class="project-list">
-    @for (p of projects; track p.id) {
+    @for (p of projects.slice(1); track p.id) {
     <app-project-card
       [title]="p.title"
       [description]="p.description"

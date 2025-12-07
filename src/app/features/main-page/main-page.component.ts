@@ -39,7 +39,7 @@ export class MainPageComponent implements AfterViewInit {
         }
       },
       {
-        threshold: 0.6, // cca 40 % sekce musí být vidět
+        threshold: 0.7, // cca 40 % sekce musí být vidět
       }
     );
 

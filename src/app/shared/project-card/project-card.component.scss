@@ -90,3 +90,50 @@
   background: rgba(15, 118, 110, 0.2);
   color: #67e8f9;
 }
+
+.project-card--with-image .project-card_grid {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr); /* levý sloupec = perioda+obrázek, pravý = text */
+  column-gap: 2rem;
+  row-gap: 0.75rem;
+  align-items: start;
+}
+
+/* 1. řádek */
+.project-card--with-image .project-card_period {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  padding-top: 0.25rem;
+}
+
+.project-card--with-image .project-card_title {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+}
+
+/* 2. řádek */
+.project-card--with-image .project-card_image-wrapper {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.project-card--with-image .project-card_image {
+  display: block;
+  width: 100%;
+  border-radius: 0.75rem;
+}
+
+.project-card--with-image .project-card_content {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+
