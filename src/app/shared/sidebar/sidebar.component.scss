@@ -2,10 +2,9 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  height: 100%;          /* zabere celou výšku rodiče (aside) */
-  padding: 2.5rem;
-}
-
+  height: 100%;
+} 
+  
 /* header nahoře – jen spacing */
 .sidebar_header {
   margin-bottom: 2.5rem;
@@ -81,5 +80,4 @@
   font-size: 0.8rem;
   color: #94a3b8;
   opacity: 0.8;
-  padding-top: 2.5rem;
 }
