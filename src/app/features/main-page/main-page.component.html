@@ -12,16 +12,49 @@
   </p>
 </section>
 
-<div style="height: 500px"></div>
+<div style="height: 5rem"></div>
 
 <section id="experience" data-section-id="experience" class="mb-5">
-  <h2>Experience</h2>
-  <p>Práce, projekty…</p>
+  <div class="project-list">
+    @for (p of experiences; track p.id) {
+    <app-project-card
+      [title]="p.title"
+      [description]="p.description"
+      [tags]="p.tags"
+      [period]="p.period ?? ''"
+      [imageUrl]="p.imageUrl"
+      [link]="p.link"
+    />
+    }
+  </div>
+  <div>
+    <p>
+      <a class="resume-link" href="/resume.pdf" target="_blank"
+        >Zobrazit celý životopis</a
+      >
+    </p>
+  </div>
 </section>
-<div style="height: 500px"></div>
+
+<div style="height: 5rem"></div>
 
 <section id="projects" data-section-id="projects" class="mb-5">
-  <h2>Projects</h2>
-  <p>Seznam projektů…</p>
+  <div class="project-list">
+    @for (p of projects; track p.id) {
+    <app-project-card
+      [title]="p.title"
+      [description]="p.description"
+      [tags]="p.tags"
+      [period]="p.period ?? ''"
+      [imageUrl]="p.imageUrl"
+      [link]="p.link"
+    />
+    }
+  </div>
+  <div>
+    <p>
+      <a class="resume-link" href="/projects">Zobrazit všechny projekty</a>
+    </p>
+  </div>
 </section>
-<div style="height: 500px"></div>
+<div style="height: 5rem"></div>

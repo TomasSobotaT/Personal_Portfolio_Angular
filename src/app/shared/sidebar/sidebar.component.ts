@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ScrollService } from '../../core/scroll.service';
+import { ScrollService } from '../../core/services/scroll.service';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({

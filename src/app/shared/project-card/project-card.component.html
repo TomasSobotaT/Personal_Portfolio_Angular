@@ -1,0 +1,43 @@
+<article class="project-card">
+  <header class="project-card_header">
+    <span class="project-card_period">{{ period() }}</span>
+  </header>
+
+  <div class="project-card_body">
+    @if (hasImage()) {
+    <div class="project-card_image-wrapper">
+      <img [src]="imageUrl()" alt="" class="project-card_image" />
+    </div>
+    }
+
+    <div class="project-card_content">
+      <h3 class="project-card_title">
+        @if (link()) {
+        <a [href]="link()!" target="_blank" rel="noopener noreferrer">
+          {{ title() }} ↗
+        </a>
+        } @else {
+        {{ title() }}
+        }
+      </h3>
+
+      @if (subtitle()) {
+      <p class="project-card_subtitle">
+        {{ subtitle() }}
+      </p>
+      }
+
+      <p class="project-card_description">
+        {{ description() }}
+      </p>
+
+      @if (tags().length) {
+      <div class="project-card_tags">
+        @for (tag of tags(); track tag) {
+        <span class="project-card_tag">{{ tag }}</span>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</article>

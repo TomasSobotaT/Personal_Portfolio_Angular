@@ -1,17 +1,24 @@
-import { AfterViewInit, Component, ElementRef } from '@angular/core';
-import { ScrollService } from '../../core/scroll.service';
+import { AfterViewInit, Component, ElementRef, signal } from '@angular/core';
+import { ScrollService } from '../../core/services/scroll.service';
+import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
+import { PROJECTS } from '../../core/data-sources/project.datasource';
+import { EXPERIENCES } from '../../core/data-sources/experience.datasource';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
+  imports: [ProjectCardComponent],
 })
 export class MainPageComponent implements AfterViewInit {
   constructor(
     private elRef: ElementRef<HTMLElement>,
     private scrollService: ScrollService
   ) {}
+
+  projects = PROJECTS;
+  experiences = EXPERIENCES;
 
   ngAfterViewInit(): void {
     const sections = this.elRef.nativeElement.querySelectorAll<HTMLElement>(
@@ -32,7 +39,7 @@ export class MainPageComponent implements AfterViewInit {
         }
       },
       {
-        threshold: 0.1, // cca 40 % sekce musí být vidět
+        threshold: 0.6, // cca 40 % sekce musí být vidět
       }
     );
 

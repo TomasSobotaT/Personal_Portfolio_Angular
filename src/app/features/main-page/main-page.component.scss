@@ -1,0 +1,7 @@
+.resume-link::after {
+  content: "↗";
+  margin-left: 6px;
+  font-size: 0.9em;
+  display: inline-block;
+  transform: translateY(-1px);
+}
