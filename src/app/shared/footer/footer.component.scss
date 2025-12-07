@@ -1,0 +1,33 @@
+.footer {
+  padding: 4.5rem 0;
+  display: flex;
+  justify-content: start;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 0.1rem;
+}
+
+.footer-socials a {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5f5; 
+  text-decoration: none;
+  font-size: 1.3rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-socials a:hover {
+  background-color: rgba(45, 212, 191, 0.1); // jemná teal/green
+  color: #5eead4; // teal-300
+  transform: translateY(-1px);
+}
+
+.footer-g {
+  font-weight: 600;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
