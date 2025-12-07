@@ -1,17 +1,85 @@
+/* celý levý panel */
 .sidebar {
   display: flex;
   flex-direction: column;
-  height: 100vh;          // zabere celou výšku
+  height: 100%;          /* zabere celou výšku rodiče (aside) */
+  padding: 2.5rem;
 }
 
-.sidebar__header {
-  margin-bottom: 3rem;
+/* header nahoře – jen spacing */
+.sidebar_header {
+  margin-bottom: 2.5rem;
 }
 
-.sidebar__nav {
-  margin-bottom: 3rem;
+/* MENU ---------------------------------------- */
+
+.sidebar_menu {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  margin-top: 1rem;
 }
 
-.sidebar__footer {
-  margin-top: auto;       // tohle ho „odtlačí“ dolů
+.sidebar_menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.sidebar_menu-line {
+  width: 28px;
+  height: 1px;
+  background-color: rgba(148, 163, 184, 0.4);
+  transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+.sidebar_menu-label {
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+/* hover efekt */
+.sidebar_menu-item:hover .sidebar_menu-line {
+  width: 56px;
+  background-color: rgba(148, 163, 184, 0.8);
+}
+
+.sidebar_menu-item:hover .sidebar_menu-label {
+  color: #e2e8f0;
+}
+
+/* aktivní položka */
+.sidebar_menu-item-active .sidebar_menu-line {
+  width: 56px;
+  background-color: rgba(226, 232, 240, 0.9);
+}
+
+.sidebar_menu-item-active .sidebar_menu-label {
+  color: #e2e8f0;
+}
+
+/* utlumený text */
+.sidebar_menu-label-muted {
+  color: rgba(148, 163, 184, 0.5);
+}
+
+/* FOOTER – POŠLEME DOLŮ ---------------------------------------- */
+
+.sidebar_footer {
+  margin-top: auto;        /* klíč: odtlačí footer na dno flex containeru */
+  font-size: 0.8rem;
+  color: #94a3b8;
+  opacity: 0.8;
+  padding-top: 2.5rem;
 }

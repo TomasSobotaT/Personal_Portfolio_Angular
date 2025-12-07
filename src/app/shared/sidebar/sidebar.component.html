@@ -1,33 +1,76 @@
 <div class="sidebar">
   <!-- header / title nahoře -->
-  <header class="sidebar__header">
-    <h1 class="sidebar__name">Tomáš Sobota</h1>
-    <p class="sidebar__role">C# / ASP.NET & Angular developer</p>
-    <p class="sidebar__intro">Buduju webové aplikace, API a integrace.</p>
+  <header class="sidebar_header">
+    <h1 class="sidebar_name">Tomáš Sobota</h1>
+    <p class="sidebar_role">C# / ASP.NET & Angular developer</p>
+    <p class="sidebar_intro">Buduju webové aplikace, API a integrace.</p>
   </header>
 
-  <!-- menu uprostřed -->
-  <nav class="sidebar__nav">
-    <ul class="sidebar__menu">
-      <li>
-        <button (click)="scrollTo('about')" class="sidebar__link">ABOUT</button>
-      </li>
-      <li>
-        <button (click)="scrollTo('experience')" class="sidebar__link">
-          EXPERIENCE
-        </button>
-      </li>
-      <li>
-        <button (click)="scrollTo('projects')" class="sidebar__link">
-          PROJECTS
-        </button>
-      </li>
-    </ul>
+  <!-- menu -->
+  <nav class="sidebar_menu">
+    <button
+      class="sidebar_menu-item"
+      [class.sidebar_menu-item-active]="activeSection === 'about'"
+      (click)="scrollTo('about')"
+    >
+      <span class="sidebar_menu-line"></span>
+      <span class="sidebar_menu-label">ABOUT</span>
+    </button>
+
+    <button
+      class="sidebar_menu-item"
+      [class.sidebar_menu-item-active]="activeSection === 'experience'"
+      (click)="scrollTo('experience')"
+    >
+      <span class="sidebar_menu-line"></span>
+      <span class="sidebar_menu-label">EXPERIENCE</span>
+    </button>
+
+    <button
+      class="sidebar_menu-item"
+      [class.sidebar_menu-item-active]="activeSection === 'projects'"
+      (click)="scrollTo('projects')"
+    >
+      <span class="sidebar_menu-line"></span>
+      <span
+        class="sidebar_menu-label sidebar_menu-label-muted"
+        [class.sidebar_menu-label-muted]="activeSection !== 'projects'"
+      >
+        PROJECTS
+      </span>
+    </button>
+
+    <button
+      class="sidebar_menu-item"
+      [class.sidebar_menu-item-active]="activeSection === 'education'"
+      (click)="scrollTo('projects')"
+    >
+      <span class="sidebar_menu-line"></span>
+      <span
+        class="sidebar_menu-label sidebar_menu-label-muted"
+        [class.sidebar_menu-label-muted]="activeSection !== 'education'"
+      >
+        Education
+      </span>
+    </button>
+
+    <button
+      class="sidebar_menu-item"
+      [class.sidebar_menu-item-active]="activeSection === 'others'"
+      (click)="scrollTo('projects')"
+    >
+      <span class="sidebar_menu-line"></span>
+      <span
+        class="sidebar_menu-label sidebar_menu-label-muted"
+        [class.sidebar_menu-label-muted]="activeSection !== 'others'"
+      >
+        Others
+      </span>
+    </button>
   </nav>
 
   <!-- footer dole -->
-  <footer class="sidebar__footer">
-    <!-- místo pro ikonky -->
-    <span>© {{ currentYear }} TS</span>
+  <footer class="sidebar_footer">
+    <span>© {{ currentYear }} Tomáš Sobota</span>
   </footer>
 </div>

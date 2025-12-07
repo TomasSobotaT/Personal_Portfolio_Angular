@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ScrollService } from '../../core/scroll.service';
+import { ScrollService } from '../../scroll.service.ts/scroll.service'; // cesta podle tebe
 
 @Component({
   selector: 'app-sidebar',
@@ -9,8 +9,13 @@ import { ScrollService } from '../../core/scroll.service';
 })
 export class SidebarComponent {
   currentYear = new Date().getFullYear();
+  activeSection = 'about';
 
-  constructor(private scrollService: ScrollService) {}
+  constructor(private scrollService: ScrollService) {
+    this.scrollService.activeSection$.subscribe((id) => {
+      this.activeSection = id;
+    });
+  }
 
   scrollTo(sectionId: string) {
     this.scrollService.scrollTo(sectionId);
