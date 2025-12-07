@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ScrollService } from '../../scroll.service.ts/scroll.service'; // cesta podle tebe
+import { ScrollService } from '../../core/scroll.service'; // cesta podle tebe
 
 @Component({
   selector: 'app-sidebar',

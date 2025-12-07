@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef } from '@angular/core';
-import { ScrollService } from '../../scroll.service.ts/scroll.service';
+import { ScrollService } from '../../core/scroll.service';
 
 @Component({
   selector: 'app-main-page',
