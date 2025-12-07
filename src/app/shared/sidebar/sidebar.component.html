@@ -2,8 +2,11 @@
   <!-- header / title nahoře -->
   <header class="sidebar_header">
     <h1 class="sidebar_name">Tomáš Sobota</h1>
-    <p class="sidebar_role">C# / ASP.NET & Angular developer</p>
-    <p class="sidebar_intro">Buduju webové aplikace, API a integrace.</p>
+    <p class="sidebar_role">C# / ASP.NET / .NET developer</p>
+    <p class="sidebar_intro">
+      Buduji webové aplikace, API a integrace s přesahem <br />
+      do FE (Angular) a MS SQL.
+    </p>
   </header>
 
   <!-- menu -->
@@ -14,7 +17,7 @@
       (click)="scrollTo('about')"
     >
       <span class="sidebar_menu-line"></span>
-      <span class="sidebar_menu-label">ABOUT</span>
+      <span class="sidebar_menu-label">O mně</span>
     </button>
 
     <button
@@ -23,7 +26,7 @@
       (click)="scrollTo('experience')"
     >
       <span class="sidebar_menu-line"></span>
-      <span class="sidebar_menu-label">EXPERIENCE</span>
+      <span class="sidebar_menu-label">Zkušenosti</span>
     </button>
 
     <button
@@ -36,7 +39,7 @@
         class="sidebar_menu-label sidebar_menu-label-muted"
         [class.sidebar_menu-label-muted]="activeSection !== 'projects'"
       >
-        PROJECTS
+        Projekty
       </span>
     </button>
 
@@ -50,7 +53,7 @@
         class="sidebar_menu-label sidebar_menu-label-muted"
         [class.sidebar_menu-label-muted]="activeSection !== 'education'"
       >
-        Education
+        Vzdělání & kurzy
       </span>
     </button>
 
@@ -64,7 +67,7 @@
         class="sidebar_menu-label sidebar_menu-label-muted"
         [class.sidebar_menu-label-muted]="activeSection !== 'others'"
       >
-        Others
+        Ostatní
       </span>
     </button>
   </nav>
