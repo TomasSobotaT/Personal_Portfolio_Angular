@@ -3,6 +3,7 @@ import { ScrollService } from '../../core/services/scroll.service';
 import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
 import { PROJECTS } from '../../core/data-sources/project.datasource';
 import { EXPERIENCES } from '../../core/data-sources/experience.datasource';
+import { EDUCATIONS } from '../../core/data-sources/education.datasource';
 
 @Component({
   selector: 'app-main-page',
@@ -19,6 +20,7 @@ export class MainPageComponent implements AfterViewInit {
 
   projects = PROJECTS;
   experiences = EXPERIENCES;
+  educations = EDUCATIONS;
 
   ngAfterViewInit(): void {
     const sections = this.elRef.nativeElement.querySelectorAll<HTMLElement>(
@@ -39,7 +41,7 @@ export class MainPageComponent implements AfterViewInit {
         }
       },
       {
-        threshold: 0.7, // cca 40 % sekce musí být vidět
+        threshold: 0.45, // cca 40 % sekce musí být vidět
       }
     );
 

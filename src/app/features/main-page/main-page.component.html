@@ -53,7 +53,41 @@
   </div>
   <div>
     <p>
-      <a class="resume-link" href="/projects">Zobrazit všechny projekty</a>
+      <a
+        class="resume-link"
+        href="https://www.linkedin.com/in/tomas-sobota/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Zobrazit všechny projekty</a
+      >
+    </p>
+  </div>
+</section>
+<div style="height: 5rem"></div>
+
+<section id="education" data-section-id="education" class="mb-5">
+  <div class="project-list">
+    @for (p of educations; track p.id) {
+    <app-project-card
+      [title]="p.title"
+      [description]="p.description"
+      s
+      [tags]="p.tags"
+      [period]="p.period ?? ''"
+      [imageUrl]="p.imageUrl"
+      [link]="p.link"
+    />
+    }
+  </div>
+  <div>
+    <p>
+      <a
+        class="resume-link"
+        href="https://www.linkedin.com/in/tomas-sobota/details/certifications/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Zobrazit vše</a
+      >
     </p>
   </div>
 </section>

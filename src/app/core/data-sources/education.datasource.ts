@@ -3,24 +3,30 @@ import { Project } from '../models/project.model';
 export const EDUCATIONS: Project[] = [
   {
     id: '1',
-    period: 'prosinec 2023 – dosud',
-    title: 'Verisoft s.r.o. - .NET Developer',
-    description:
-      'Vývoj moderních .NET mikroslužeb a integrací, Datové migrace, MSSQL a Angular frontend. Vyvíjel jsem např. API pro digitální podepisování se službou Signi, včetně webhooků, dávkových procesů a správy dokumentů. Současně jsem udržoval a rozvíjel legacy WinForms CRM Saplikaci.',
-    tags: ['C#', 'ASP.NET', 'WinForms', 'Angular', 'MSSQL', 'Azure DevOps'],
+    period: 'říjen 2025',
+    title: 'Microsoft Azure – The Complete Guide',
+    description: 'Kompletní kurz Microsoft Azure na Udemy.',
+    tags: ['Microsoft Azure', 'Cloud'],
   },
   {
     id: '2',
-    period: 'červenec 2023 – prosinec 2023',
-    title: 'C# junior programátor, .NET a web developer na volné noze',
-    description:
-      'Realizace malých softwarových projektů, tvorba webových stránek, opensouce projekty.',
-    tags: ['C#', 'Javascript ', 'HTML', 'CSS'],
+    period: 'září 2025',
+    title: 'Angular – The Complete Guide (2025 Edition)',
+    description: 'Komplexní kurz Angularu a Typescriptu na Udemy.',
+    tags: ['Angular', 'Typescript', 'Frontend'],
   },
   {
     id: '3',
-    period: 'srpen 2022 – červen 2023',
-    title: 'Kurz programátor WWW aplikací C# .NET',
+    period: 'červenec 2025',
+    title: 'Optimalizace výkonu, ladění a škálovatelnost aplikací',
+    description:
+      'Profesionální školení Gopas zaměřené na výkon, ladění a škálování .NET aplikací.',
+    tags: ['Škálovatelnost', '.NET', 'Optimalizace výkonu'],
+  },
+  {
+    id: '4',
+    period: '08/2022 – 07/2023',
+    title: 'ITNetwork - programátor WWW aplikací C# .NET',
     description:
       'Kurz C#, ASP.NET, ADO.NET, EF, MS-SQL, Javascript, HTML, CSS, Bootstrap, Git.',
     tags: ['C#', 'Javascript ', 'HTML', 'CSS'],
