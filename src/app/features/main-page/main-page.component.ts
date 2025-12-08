@@ -4,6 +4,7 @@ import { ProjectCardComponent } from '../../shared/project-card/project-card.com
 import { PROJECTS } from '../../core/data-sources/project.datasource';
 import { EXPERIENCES } from '../../core/data-sources/experience.datasource';
 import { EDUCATIONS } from '../../core/data-sources/education.datasource';
+import { DataSourceType } from '../../core/enums/data-source-enum';
 
 @Component({
   selector: 'app-main-page',
@@ -21,6 +22,7 @@ export class MainPageComponent implements AfterViewInit {
   projects = PROJECTS;
   experiences = EXPERIENCES;
   educations = EDUCATIONS;
+  protected readonly DataSourceType = DataSourceType;
 
   ngAfterViewInit(): void {
     const sections = this.elRef.nativeElement.querySelectorAll<HTMLElement>(

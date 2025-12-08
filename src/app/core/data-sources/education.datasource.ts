@@ -7,15 +7,13 @@ export const EDUCATIONS: Project[] = [
     title: 'Microsoft Azure – The Complete Guide',
     description: 'Kompletní kurz Microsoft Azure na Udemy.',
     tags: ['Microsoft Azure', 'Cloud'],
-    imageUrl: '-',
   },
   {
     id: '2',
     period: '09/2025',
-    title: 'Angular – The Complete Guide (2025 Edition)',
+    title: 'Angular – The Complete Guide\u00AD (2025 Edition)',
     description: 'Komplexní kurz Angularu a Typescriptu na Udemy.',
     tags: ['Angular', 'Typescript', 'Frontend'],
-    imageUrl: '-',
   },
   {
     id: '3',
@@ -24,15 +22,13 @@ export const EDUCATIONS: Project[] = [
     description:
       'Profesionální školení Gopas zaměřené na výkon, ladění a škálování .NET aplikací.',
     tags: ['Škálovatelnost', '.NET', 'Optimalizace výkonu'],
-    imageUrl: '-',
   },
   {
     id: '4',
-    period: '08/2022 – 07/2023',
+    period: '07/2023',
     title: 'ITNetwork - programátor WWW aplikací C# .NET',
     description:
       'Kurz C#, ASP.NET, ADO.NET, EF, MS-SQL, Javascript, HTML, CSS, Bootstrap, Git.',
     tags: ['C#', 'Javascript ', 'HTML', 'CSS'],
-    imageUrl: '-',
   },
 ];

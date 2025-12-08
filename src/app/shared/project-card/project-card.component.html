@@ -1,8 +1,6 @@
 <article class="project-card" [class.project-card--with-image]="hasImage()">
-  @if (hasImage()) {
-  <!-- LAYOUT PRO PROJEKTY S OBRÁZKEM -->
+  @if (dataSourceType() === DataSourceType.Project) {
   <div class="project-card_grid">
-    <!-- 1. řádek -->
     <div class="project-card_period">
       {{ period() }}
     </div>
@@ -17,10 +15,11 @@
       }
     </h3>
 
-    <!-- 2. řádek -->
+    @if (hasImage()) {
     <div class="project-card_image-wrapper">
       <img [src]="imageUrl()" alt="" class="project-card_image" />
     </div>
+    }
 
     <div class="project-card_content">
       @if (subtitle()) {
@@ -37,11 +36,49 @@
         <span class="project-card_tag">{{ tag }}</span>
         }
       </div>
+
+      }
+    </div>
+  </div>
+  } @else if (dataSourceType() === DataSourceType.Education) {
+
+  <div class="project-card_grid project-card_grid--education">
+    <div class="project-card_period-education">
+      <span>{{ period() }}</span>
+    </div>
+
+    <div class="project-card_content">
+      <h3 class="project-card_title">
+        @if (link()) {
+        <a [href]="link()!" target="_blank" rel="noopener noreferrer">
+          {{ title() }} ↗
+        </a>
+        } @else {
+        {{ title() }}
+        }
+      </h3>
+
+      @if (subtitle()) {
+      <p class="project-card_subtitle">
+        {{ subtitle() }}
+      </p>
+      }
+
+      <p class="project-card_description">
+        {{ description() }}
+      </p>
+
+      @if (tags().length) {
+      <div class="project-card_tags">
+        @for (tag of tags(); track tag) {
+        <span class="project-card_tag">{{ tag }}</span>
+        }
+      </div>
       }
     </div>
   </div>
   } @else {
-  <!-- TVŮJ PŮVODNÍ LAYOUT PRO EXPERIENCE BEZ OBRÁZKU -->
+
   <header class="project-card_header">
     <span class="project-card_period">{{ period() }}</span>
   </header>
@@ -59,7 +96,9 @@
       </h3>
 
       @if (subtitle()) {
-      <p class="project-card_subtitle">{{ subtitle() }}</p>
+      <p class="project-card_subtitle">
+        {{ subtitle() }}
+      </p>
       }
 
       <p class="project-card_description">
@@ -72,6 +111,7 @@
         <span class="project-card_tag">{{ tag }}</span>
         }
       </div>
+
       }
     </div>
   </div>

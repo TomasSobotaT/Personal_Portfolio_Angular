@@ -24,6 +24,7 @@
       [period]="p.period ?? ''"
       [imageUrl]="p.imageUrl"
       [link]="p.link"
+      [dataSourceType]="DataSourceType.Experience"
     />
     }
   </div>
@@ -48,6 +49,7 @@
       [period]="p.period ?? ''"
       [imageUrl]="p.imageUrl"
       [link]="p.link"
+      [dataSourceType]="DataSourceType.Project"
     />
     }
   </div>
@@ -71,11 +73,11 @@
     <app-project-card
       [title]="p.title"
       [description]="p.description"
-      s
       [tags]="p.tags"
       [period]="p.period ?? ''"
       [imageUrl]="p.imageUrl"
       [link]="p.link"
+      [dataSourceType]="DataSourceType.Education"
     />
     }
   </div>

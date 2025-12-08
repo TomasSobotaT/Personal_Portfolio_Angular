@@ -47,7 +47,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: '5',
-    period: '2023 — dosud',
+    period: '2023',
     title: 'Legacy Desktop System Maintenance',
     description: `Údržba a vývoj firemní Windows Forms aplikace (.NET Framework), bugfixing a přidávání funkcí. Migrace logky no dových microservices.`,
     tags: [],

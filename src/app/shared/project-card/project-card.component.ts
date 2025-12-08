@@ -1,4 +1,5 @@
 import { Component, computed, input } from '@angular/core';
+import { DataSourceType } from '../../core/enums/data-source-enum';
 
 @Component({
   selector: 'app-project-card',
@@ -16,4 +17,6 @@ export class ProjectCardComponent {
   imageUrl = input<string>(); // volitelný obrázek
   tags = input<string[]>([]); // tech stack
   hasImage = computed(() => !!this.imageUrl());
+  dataSourceType = input<DataSourceType>();
+  protected readonly DataSourceType = DataSourceType;
 }
