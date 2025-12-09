@@ -1,0 +1,67 @@
+@import "../../../styles/variables.scss";
+
+.helpers {
+  padding: 2rem 0;
+}
+
+.helpers__title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.helpers-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .helpers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .helpers-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.helpers-card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+}
+
+.helpers-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.helpers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.helpers-list__link {
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0.3rem;
+}
+
+.helpers-list__name {
+  color: $color-secondary
+}
+
+.helpers-list__domain {
+  color: $color-muted
+}
+
+.helpers-list__domain:hover {
+  color: $color-tertiary
+}

@@ -1,1 +1,32 @@
-<p>helpers works!</p>
+<div class="container">
+  <div class="row">
+    <section class="helpers">
+      <h1 class="helpers__title text-center my-5">Pomůcky při programování</h1>
+
+      <div class="helpers-grid">
+        @for (cat of categories; track cat.id) {
+        <article class="helpers-card">
+          <h2 class="helpers-card__title mb-4 text-center">{{ cat.id }}</h2>
+
+          <ul class="helpers-list">
+            @for (link of cat.items; track link.url) {
+            <li>
+              <a
+                [href]="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="helpers-list__link"
+              >
+                <span class="helpers-list__name">{{ link.name }}</span>
+                <span class="helpers-list__domain"> – {{ link.url }}</span>
+              </a>
+            </li>
+            }
+          </ul>
+        </article>
+        }
+      </div>
+    </section>
+  </div>
+</div>
+>
