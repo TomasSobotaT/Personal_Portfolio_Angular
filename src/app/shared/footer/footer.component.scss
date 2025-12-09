@@ -1,6 +1,3 @@
-@import "../../../styles/variables.scss";
-
-
 .footer {
   padding: 4.5rem 0;
   display: flex;
@@ -18,7 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $color-muted;
+  color: #cbd5f5; 
   text-decoration: none;
   font-size: 1.3rem;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
@@ -26,6 +23,6 @@
 
 .footer-socials a:hover {
   background-color: rgba(45, 212, 191, 0.1);
-  color: $color-tertiary;
+  color: #67e8f9;
   transform: translateY(-1px);
 }

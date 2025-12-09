@@ -7,13 +7,12 @@ export const OTHERS: Project[] = [
     description:
       'Rodokmen mojí rodiny vytvořený od července 2020 do prosince 2020 jako dárek rodičům',
     tags: [],
-    link: 'https://www.familysearch.org/tree/pedigree/landscape/KW3T-5WJ',
+    link: '/rodokmen',
   },
   {
     id: '2',
     title: 'Pomůcky při programování',
-    description:
-      'Různé pomůcky, které používám při programování a vývoji software.',
+    description: 'Různé pomůcky pro programování a vývoj software.',
     tags: [],
     link: 'https://example.com/programming-tools',
   },

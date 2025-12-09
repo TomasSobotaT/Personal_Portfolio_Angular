@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
 import { MainPageComponent } from './features/main-page/main-page.component';
 import { PageShellComponent } from './shared/page-shell/page-shell.component';
+import { FamilyTreeComponent } from './features/family-tree/family-tree.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: PageShellComponent, // shell = layout
-    children: [
-      { path: '', component: MainPageComponent }, // /
-      //{ path: 'portfolio', component: PortfolioPageComponent }, // /portfolio
-    ],
+    component: PageShellComponent,
+    children: [{ path: '', component: MainPageComponent }],
+  },
+  {
+    path: 'rodokmen',
+    component: FamilyTreeComponent,
   },
 ];
