@@ -5,6 +5,7 @@ import { PROJECTS } from '../../core/data-sources/project.datasource';
 import { EXPERIENCES } from '../../core/data-sources/experience.datasource';
 import { EDUCATIONS } from '../../core/data-sources/education.datasource';
 import { DataSourceType } from '../../core/enums/data-source-enum';
+import { OTHERS } from '../../core/data-sources/other.datasource';
 
 @Component({
   selector: 'app-main-page',
@@ -22,6 +23,7 @@ export class MainPageComponent implements AfterViewInit {
   projects = PROJECTS;
   experiences = EXPERIENCES;
   educations = EDUCATIONS;
+  others = OTHERS;
   protected readonly DataSourceType = DataSourceType;
 
   ngAfterViewInit(): void {

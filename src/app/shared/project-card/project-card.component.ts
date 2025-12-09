@@ -18,4 +18,12 @@ export class ProjectCardComponent {
   hasImage = computed(() => !!this.imageUrl());
   dataSourceType = input<DataSourceType>();
   protected readonly DataSourceType = DataSourceType;
+
+  onCardClick() {
+    const url = this.link();
+    if (!url) {
+      return;
+    }
+    window.open(url, '_blank', 'noopener');
+  }
 }

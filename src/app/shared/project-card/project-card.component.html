@@ -1,18 +1,18 @@
-<article class="project-card" [class.project-card--with-image]="hasImage()">
+<article
+  class="project-card"
+  [class.project-card--with-image]="hasImage()"
+  [class.project-card--link]="!!link()"
+  (click)="onCardClick()"
+>
   @if (dataSourceType() === DataSourceType.Project) {
+
   <div class="project-card_grid">
     <div class="project-card_period">
       {{ period() }}
     </div>
 
     <h3 class="project-card_title">
-      @if (link()) {
-      <a [href]="link()!" target="_blank" rel="noopener noreferrer">
-        {{ title() }} ↗
-      </a>
-      } @else {
       {{ title() }}
-      }
     </h3>
 
     @if (hasImage()) {
@@ -36,10 +36,10 @@
         <span class="project-card_tag">{{ tag }}</span>
         }
       </div>
-
       }
     </div>
   </div>
+
   } @else if (dataSourceType() === DataSourceType.Education) {
 
   <div class="project-card_grid project-card_grid--education">
@@ -49,13 +49,7 @@
 
     <div class="project-card_content">
       <h3 class="project-card_title">
-        @if (link()) {
-        <a [href]="link()!" target="_blank" rel="noopener noreferrer">
-          {{ title() }} ↗
-        </a>
-        } @else {
         {{ title() }}
-        }
       </h3>
 
       @if (subtitle()) {
@@ -77,6 +71,39 @@
       }
     </div>
   </div>
+
+  } @else if (dataSourceType() === DataSourceType.Experience) {
+
+  <header class="project-card_header">
+    <span class="project-card_period">{{ period() }}</span>
+  </header>
+
+  <div class="project-card_body">
+    <div class="project-card_content">
+      <h3 class="project-card_title">
+        {{ title() }}
+      </h3>
+
+      @if (subtitle()) {
+      <p class="project-card_subtitle">
+        {{ subtitle() }}
+      </p>
+      }
+
+      <p class="project-card_description">
+        {{ description() }}
+      </p>
+
+      @if (tags().length) {
+      <div class="project-card_tags">
+        @for (tag of tags(); track tag) {
+        <span class="project-card_tag">{{ tag }}</span>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
   } @else {
 
   <header class="project-card_header">
@@ -86,13 +113,7 @@
   <div class="project-card_body">
     <div class="project-card_content">
       <h3 class="project-card_title">
-        @if (link()) {
-        <a [href]="link()!" target="_blank" rel="noopener noreferrer">
-          {{ title() }} ↗
-        </a>
-        } @else {
         {{ title() }}
-        }
       </h3>
 
       @if (subtitle()) {
@@ -111,9 +132,9 @@
         <span class="project-card_tag">{{ tag }}</span>
         }
       </div>
-
       }
     </div>
   </div>
+
   }
 </article>

@@ -8,6 +8,7 @@ export const EXPERIENCES: Project[] = [
     description:
       'Vývoj moderních .NET mikroslužeb a integrací, Datové migrace, MSSQL a Angular frontend. Vyvíjel jsem např. API pro digitální podepisování se službou Signi, včetně webhooků, dávkových procesů a správy dokumentů. Současně jsem udržoval a rozvíjel legacy WinForms ERP aplikaci.',
     tags: ['C#', 'ASP.NET', 'WinForms', 'Angular', 'MSSQL', 'Azure DevOps'],
+    link: 'https://www.verisoft.cz/',
   },
   {
     id: '2',
@@ -24,5 +25,6 @@ export const EXPERIENCES: Project[] = [
     description:
       'Kurz C#, ASP.NET, ADO.NET, EF, MS-SQL, Javascript, HTML, CSS, Bootstrap, Git.',
     tags: ['C#', 'Javascript ', 'HTML', 'CSS'],
+    link: 'https://www.itnetwork.cz/portfolio/77823',
   },
 ];

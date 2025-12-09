@@ -7,6 +7,7 @@ export const EDUCATIONS: Project[] = [
     title: 'Microsoft Azure – The Complete Guide',
     description: 'Kompletní kurz Microsoft Azure na Udemy.',
     tags: ['Microsoft Azure', 'Cloud'],
+    link: 'https://www.udemy.com/course/microsoft-azure-from-zero-to-hero-the-complete-guide',
   },
   {
     id: '2',
@@ -14,6 +15,7 @@ export const EDUCATIONS: Project[] = [
     title: 'Angular – The Complete Guide (2025 Edition)',
     description: 'Komplexní kurz Angularu a Typescriptu na Udemy.',
     tags: ['Angular', 'Typescript', 'Frontend'],
+    link: 'https://www.udemy.com/course/the-complete-guide-to-angular-2',
   },
   {
     id: '3',
@@ -22,6 +24,7 @@ export const EDUCATIONS: Project[] = [
     description:
       'Profesionální školení Gopas zaměřené na výkon, ladění a škálování .NET aplikací.',
     tags: ['.NET', 'Optimalizace', 'Ladění'],
+    link: 'https://www.gopas.cz/skoleni/optimalizace-vykonu-ladeni-a-skalovatelnost-aplikaci-dotnet',
   },
   {
     id: '4',
@@ -30,5 +33,6 @@ export const EDUCATIONS: Project[] = [
     description:
       'Kurz C#, ASP.NET, ADO.NET, EF, MS-SQL, Javascript, HTML, CSS, Bootstrap, Git.',
     tags: ['C#', 'Javascript ', 'HTML', 'CSS'],
+    link: 'https://www.itnetwork.cz/portfolio/77823',
   },
 ];
