@@ -1,4 +1,4 @@
-<section id="about" data-section-id="about" class="mb-5">
+<section id="about" data-section-id="about" class="section-separator">
   <p>
     Hezký den, jmenuji se Tomáš a jsem nadšený programátor ve
     <a href="https://www.verisoft.cz" target="_blank" rel="noopener noreferrer"
@@ -41,9 +41,7 @@
   </p>
 </section>
 
-<div style="height: 5rem"></div>
-
-<section id="experience" data-section-id="experience" class="mb-5">
+<section id="experience" data-section-id="experience" class="section-separator">
   <div class="project-list">
     @for (p of experiences; track p.id) {
     <app-project-card
@@ -59,16 +57,17 @@
   </div>
   <div>
     <p>
-      <a class="resume-link" href="/resume.pdf" target="_blank"
+      <a
+        class="resume-link"
+        href="assets/pdf/Tomas_Sobota_NET_Developer_CV.pdf"
+        target="_blank"
         >Zobrazit celý životopis</a
       >
     </p>
   </div>
 </section>
 
-<div style="height: 5rem"></div>
-
-<section id="projects" data-section-id="projects" class="mb-5">
+<section id="projects" data-section-id="projects" class="section-separator">
   <div class="project-list">
     @for (p of projects.slice(1); track p.id) {
     <app-project-card
@@ -94,9 +93,8 @@
     </p>
   </div>
 </section>
-<div style="height: 5rem"></div>
 
-<section id="education" data-section-id="education" class="mb-5">
+<section id="education" data-section-id="education" class="section-separator">
   <div class="project-list">
     @for (p of educations; track p.id) {
     <app-project-card
@@ -122,4 +120,3 @@
     </p>
   </div>
 </section>
-<div style="height: 5rem"></div>
