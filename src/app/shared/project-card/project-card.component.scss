@@ -1,3 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .project-card {
   background: rgba(15, 23, 42, 0.9);
   border-radius: 1rem;
@@ -5,7 +7,7 @@
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
   border: 1px solid rgba(148, 163, 184, 0.2);
   backdrop-filter: blur(12px);
-  color: #e2e8f0;
+  color: $color-secondary;
   transition: transform 0.15s ease, box-shadow 0.15s ease,
   border-color 0.15s ease;
   margin-bottom: 1.5rem;
@@ -21,7 +23,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #64748b;
+  color: $color-muted;
   margin-bottom: 0.75rem;
 }
 .project-card_grid {
@@ -62,7 +64,7 @@
 
 .project-card_title a {
   text-decoration: none;
-  color: #38bdf8;
+  color: $color-tertiary;
 }
 
 .project-card_title a:hover {
@@ -72,13 +74,13 @@
 .project-card_subtitle {
   margin: 0 0 0.5rem;
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: $color-muted;
 }
 
 .project-card_description {
   margin: 0 0 0.75rem;
   font-size: 0.9rem;
-    color: #94a3b8;
+  color: $color-muted;
 }
 
 .project-card_tags {
@@ -94,7 +96,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   background: rgba(15, 118, 110, 0.2);
-  color: #67e8f9;
+  color: $color-tertiary;
 }
 
 .project-card--with-image .project-card_grid {

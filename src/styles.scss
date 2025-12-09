@@ -1,15 +1,16 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+@import "styles/variables.scss";
 
 body {
   margin: 0;
-  background: #0b1528;
+  background: $color-primary;
   min-height: 100vh;
-  color: #cbd5e1;
+  color: $color-secondary;
   font-family: system-ui, sans-serif;
   position: relative;
   overflow-x: hidden;
   font-family: 'Inter', sans-serif;
-    color: #94a3b8;
+    color: $color-muted;
   font-family: 'Inter', sans-serif;
   line-height: 1.7;
 }
@@ -32,9 +33,8 @@ body::before {
   z-index: 0;
 }
 
-/* Nadpisy */
 h1, h2, h3, h4, h5 {
-  color: #e2e8f0;
+  color: $color-secondary;
   font-weight: 700;
   margin-bottom: 1rem;
 }
@@ -43,14 +43,12 @@ h1{
 font-size: 3rem;
 }
 
-/* Sekce malých odstavců */
 p {
-  color: #94a3b8;
+  color: $color-muted;
 }
 
-/* Linky */
 a {
-  color: #e2e8f0;
+  color: $color-secondary;
   text-decoration: none;
 
 
@@ -60,15 +58,15 @@ a:hover {
 }
 
 .sidebar-item.active {
-  color: #e2e8f0;
+  color: $color-secondary;
   font-weight: 600;
 }
 
 .sidebar-item {
-  color: #64748b;
+  color: $color-muted;
 
   &:hover {
-    color: #94a3b8;
+    color: $color-muted;
   }
 }
 

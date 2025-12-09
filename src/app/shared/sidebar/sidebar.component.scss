@@ -1,3 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -9,10 +11,10 @@
 }
 .sidebar_role {
   font-size: 1.2rem;
-  color: #e2e8f0;
+  color: $color-secondary;
 }
 .sidebar_intro {
-  color: #94a3b8;
+  color: $color-muted;
 }
 .sidebar_menu {
   display: flex;
@@ -34,7 +36,7 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
 
-  color: #64748b;
+  color: $color-muted;
   transition: color 0.2s ease;
 }
 
@@ -46,40 +48,35 @@
 }
 
 .sidebar_menu-label {
-  color: #64748b;
+  color: $color-muted;
   transition: color 0.2s ease;
 }
 
-/* hover efekt */
 .sidebar_menu-item:hover .sidebar_menu-line {
   width: 56px;
   background-color: rgba(148, 163, 184, 0.8);
 }
 
 .sidebar_menu-item:hover .sidebar_menu-label {
-  color: #e2e8f0;
+  color: $color-secondary;
 }
 
-/* aktivní položka */
 .sidebar_menu-item-active .sidebar_menu-line {
   width: 56px;
   background-color: rgba(226, 232, 240, 0.9);
 }
 
 .sidebar_menu-item-active .sidebar_menu-label {
-  color: #e2e8f0;
+  color: $color-secondary;
 }
 
-/* utlumený text */
 .sidebar_menu-label-muted {
   color: rgba(148, 163, 184, 0.5);
 }
 
-/* FOOTER – POŠLEME DOLŮ ---------------------------------------- */
-
 .sidebar_footer {
-  margin-top: auto;        /* klíč: odtlačí footer na dno flex containeru */
+  margin-top: auto;      
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: $color-muted;
   opacity: 0.8;
 }
