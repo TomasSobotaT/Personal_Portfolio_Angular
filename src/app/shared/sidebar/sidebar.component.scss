@@ -1,17 +1,19 @@
-/* celý levý panel */
 .sidebar {
   display: flex;
   flex-direction: column;
   height: 100%;
 } 
   
-/* header nahoře – jen spacing */
 .sidebar_header {
   margin-bottom: 2.5rem;
 }
-
-/* MENU ---------------------------------------- */
-
+.sidebar_role {
+  font-size: 1.2rem;
+  color: #e2e8f0;
+}
+.sidebar_intro {
+  color: #94a3b8;
+}
 .sidebar_menu {
   display: flex;
   flex-direction: column;

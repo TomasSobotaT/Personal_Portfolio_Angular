@@ -8,14 +8,13 @@ import { DataSourceType } from '../../core/enums/data-source-enum';
   styleUrls: ['./project-card.component.scss'],
 })
 export class ProjectCardComponent {
-  // moderní Inputs jako signály
-  period = input<string>(''); // např. "2024 — PRESENT"
-  title = input.required<string>(); // povinné
-  subtitle = input<string>(); // volitelné
-  description = input<string>(''); // krátký popis
-  link = input<string>(); // URL na repo / demo
-  imageUrl = input<string>(); // volitelný obrázek
-  tags = input<string[]>([]); // tech stack
+  period = input<string>('');
+  title = input.required<string>();
+  subtitle = input<string>();
+  description = input<string>('');
+  link = input<string>();
+  imageUrl = input<string>();
+  tags = input<string[]>([]);
   hasImage = computed(() => !!this.imageUrl());
   dataSourceType = input<DataSourceType>();
   protected readonly DataSourceType = DataSourceType;

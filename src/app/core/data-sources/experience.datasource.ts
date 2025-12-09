@@ -6,7 +6,7 @@ export const EXPERIENCES: Project[] = [
     period: 'prosinec 2023 – dosud',
     title: 'Verisoft s.r.o. - .NET Developer',
     description:
-      'Vývoj moderních .NET mikroslužeb a integrací, Datové migrace, MSSQL a Angular frontend. Vyvíjel jsem např. API pro digitální podepisování se službou Signi, včetně webhooků, dávkových procesů a správy dokumentů. Současně jsem udržoval a rozvíjel legacy WinForms CRM Saplikaci.',
+      'Vývoj moderních .NET mikroslužeb a integrací, Datové migrace, MSSQL a Angular frontend. Vyvíjel jsem např. API pro digitální podepisování se službou Signi, včetně webhooků, dávkových procesů a správy dokumentů. Současně jsem udržoval a rozvíjel legacy WinForms ERP aplikaci.',
     tags: ['C#', 'ASP.NET', 'WinForms', 'Angular', 'MSSQL', 'Azure DevOps'],
   },
   {
@@ -15,7 +15,7 @@ export const EXPERIENCES: Project[] = [
     title: 'C# junior programátor, .NET a web developer na volné noze',
     description:
       'Realizace malých softwarových projektů, tvorba webových stránek, opensouce projekty.',
-    tags: ['C#', 'Javascript ', 'HTML', 'CSS'],
+    tags: ['C#', 'ASP.NET', 'Javascript ', 'HTML', 'CSS'],
   },
   {
     id: '3',

@@ -11,7 +11,7 @@ export const EDUCATIONS: Project[] = [
   {
     id: '2',
     period: '09/2025',
-    title: 'Angular – The Complete Guide\u00AD (2025 Edition)',
+    title: 'Angular – The Complete Guide (2025 Edition)',
     description: 'Komplexní kurz Angularu a Typescriptu na Udemy.',
     tags: ['Angular', 'Typescript', 'Frontend'],
   },
@@ -21,7 +21,7 @@ export const EDUCATIONS: Project[] = [
     title: 'Optimalizace výkonu, ladění a škálovatelnost aplikací',
     description:
       'Profesionální školení Gopas zaměřené na výkon, ladění a škálování .NET aplikací.',
-    tags: ['Škálovatelnost', '.NET', 'Optimalizace výkonu'],
+    tags: ['.NET', 'Optimalizace', 'Ladění'],
   },
   {
     id: '4',
