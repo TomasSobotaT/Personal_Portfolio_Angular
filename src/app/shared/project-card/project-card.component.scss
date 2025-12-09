@@ -7,12 +7,12 @@
   backdrop-filter: blur(12px);
   color: #e2e8f0;
   transition: transform 0.15s ease, box-shadow 0.15s ease,
-    border-color 0.15s ease;
+  border-color 0.15s ease;
   margin-bottom: 1.5rem;
 }
 
 .project-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   border-color: rgba(56, 189, 248, 0.7);
   box-shadow: 0 24px 60px rgba(8, 47, 73, 0.9);
 }
@@ -51,7 +51,7 @@
 .project-card_title {
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.3rem;
+  margin: 0 0 0.25rem;
 }
 
 .project-card_title a {
@@ -93,12 +93,13 @@
 
 .project-card--with-image .project-card_grid {
   display: grid;
-  grid-template-columns: 160px minmax(0, 1fr); 
+  grid-template-columns: 160px minmax(0, 1fr); /* levý sloupec = perioda+obrázek, pravý = text */
   column-gap: 2rem;
   row-gap: 0.75rem;
   align-items: start;
 }
 
+/* 1. řádek */
 .project-card--with-image .project-card_period {
   grid-column: 1;
   grid-row: 1;
@@ -134,12 +135,7 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-.project-card_grid {
-  display: grid;
-  grid-template-columns: 160px minmax(0, 1fr);
-  column-gap: 2rem;
-  row-gap: 0.75rem;
-}
+
 .project-card_grid--education {
   align-items: stretch;        // pravý obsah určí výšku
 }
@@ -148,7 +144,7 @@
   display: flex;
   align-items: center;         // vertikálně doprostřed
   justify-content: center;     // případně doprostřed i horizontálně
-  font-size: 1.0rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   opacity: 0.7;
