@@ -14,6 +14,6 @@ export const OTHERS: Project[] = [
     title: 'Pomůcky při programování',
     description: 'Různé pomůcky pro programování a vývoj software.',
     tags: [],
-    link: 'https://example.com/programming-tools',
+    link: '/pomucky',
   },
 ];
