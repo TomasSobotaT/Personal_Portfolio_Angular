@@ -19,8 +19,24 @@
   margin-bottom: 10rem;;
 }
 
+.section-title-mobile {
+  display: none;
+}
+
 @media (max-width: 900px) {
 .section-separator {
   margin-bottom: 7rem;
 }
+
+.section-title-mobile {
+  display: inline-block;
+  text-align: start;
+  margin-bottom: 2.5rem;
+}
+.section-title-mobile h4{
+  text-shadow:
+    0 0 6px rgba(61, 181, 233, 0.45),
+    0 0 12px rgba(61, 181, 233, 0.40),
+    0 0 20px rgba(61, 181, 233, 0.40);
+  }
 }
