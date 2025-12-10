@@ -4,7 +4,7 @@ import { provideRouter, withHashLocation } from '@angular/router';
 import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
-  providers: [provideRouter(routes, withHashLocation())],
+  providers: [provideRouter(routes)],
 });
 
 document.addEventListener('mousemove', (e) => {

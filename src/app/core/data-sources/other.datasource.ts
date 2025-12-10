@@ -7,13 +7,13 @@ export const OTHERS: Project[] = [
     description:
       'Rodokmen mojí rodiny vytvořený v roce 2020 jako dárek rodičům',
     tags: [],
-    link: '/#/rodokmen',
+    link: '/rodokmen',
   },
   {
     id: '2',
     title: 'Pomůcky při programování',
     description: 'Různé pomůcky pro programování a vývoj software.',
     tags: [],
-    link: '/#/pomucky',
+    link: '/pomucky',
   },
 ];
