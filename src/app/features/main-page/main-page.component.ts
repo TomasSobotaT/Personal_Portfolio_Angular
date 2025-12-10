@@ -6,13 +6,14 @@ import { EXPERIENCES } from '../../core/data-sources/experience.datasource';
 import { EDUCATIONS } from '../../core/data-sources/education.datasource';
 import { DataSourceType } from '../../core/enums/data-source-enum';
 import { OTHERS } from '../../core/data-sources/other.datasource';
+import { FooterBarComponent } from '../../shared/footer-bar/footer-bar.component';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
-  imports: [ProjectCardComponent],
+  imports: [ProjectCardComponent, FooterBarComponent],
 })
 export class MainPageComponent implements AfterViewInit {
   constructor(
