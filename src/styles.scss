@@ -2,7 +2,6 @@
 @import "styles/variables.scss";
 
 body {
-  margin: 0;
   background: $color-primary;
   min-height: 100vh;
   color: $color-secondary;
@@ -10,9 +9,13 @@ body {
   position: relative;
   overflow-x: hidden;
   font-family: 'Inter', sans-serif;
-    color: $color-muted;
+  color: $color-muted;
   font-family: 'Inter', sans-serif;
   line-height: 1.7;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body::before {
@@ -72,4 +75,10 @@ a:hover {
 
 section {
   scroll-margin-top: 5rem; 
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
