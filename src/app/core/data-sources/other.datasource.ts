@@ -5,7 +5,7 @@ export const OTHERS: Project[] = [
     id: '1',
     title: 'Rodokmen',
     description:
-      'Rodokmen mojí rodiny vytvořený od července 2020 do prosince 2020 jako dárek rodičům',
+      'Rodokmen mojí rodiny vytvořený v roce 2020 jako dárek rodičům',
     tags: [],
     link: '/#/rodokmen',
   },

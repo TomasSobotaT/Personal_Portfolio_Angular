@@ -18,3 +18,9 @@
 .section-separator {
   margin-bottom: 10rem;;
 }
+
+@media (max-width: 900px) {
+.section-separator {
+  margin-bottom: 7rem;
+}
+}
