@@ -26,3 +26,12 @@
   color: #67e8f9;
   transform: translateY(-1px);
 }
+
+@media (max-width: 900px) {
+.footer {
+  padding: 0;
+}
+.footer-socials a {
+  justify-content: start;
+}
+}

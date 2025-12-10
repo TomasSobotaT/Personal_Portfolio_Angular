@@ -80,3 +80,22 @@
   color: $color-muted;
   opacity: 0.8;
 }
+
+
+@media (max-width: 900px) {
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+} 
+
+.sidebar_menu {
+  display: none;
+  gap: 0;
+  margin-top: 0;
+}
+
+.sidebar_header {
+  margin-bottom: 0.8rem;
+}
+}
