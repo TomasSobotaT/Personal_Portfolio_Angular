@@ -35,9 +35,9 @@
   font-size: 0.75rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-
   color: $color-muted;
   transition: color 0.2s ease;
+  width: fit-content;  
 }
 
 .sidebar_menu-line {
