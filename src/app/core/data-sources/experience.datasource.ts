@@ -15,7 +15,7 @@ export const EXPERIENCES: Project[] = [
     period: 'červenec 2023 – prosinec 2023',
     title: 'C# junior programátor, .NET a web developer na volné noze',
     description:
-      'Realizace malých softwarových projektů, tvorba webových stránek, opensouce projekty.',
+      'Realizace malých softwarových projektů, tvorba webových stránek, opensource projekty.',
     tags: ['C#', 'ASP.NET', 'Javascript ', 'HTML', 'CSS'],
   },
   {

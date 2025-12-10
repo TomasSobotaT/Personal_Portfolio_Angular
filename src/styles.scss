@@ -14,8 +14,6 @@ body {
   line-height: 1.7;
   margin: 0;
   padding: 0;
-  max-width: 100%;
-  overflow-x: hidden;
 }
 
 body::before {
@@ -83,6 +81,9 @@ section {
   box-sizing: border-box;
 }
 
-html, body{ 
-  overflow-x: hidden;
- }
+@media (max-width: 900px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
