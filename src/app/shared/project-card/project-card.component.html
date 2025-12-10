@@ -2,11 +2,15 @@
   class="project-card"
   [class.project-card--with-image]="hasImage()"
   [class.project-card--link]="!!link()"
+  [class.project-card--type-project]="
+    dataSourceType() === DataSourceType.Project
+  "
+  [class.project-card--type-other]="dataSourceType() === DataSourceType.Other"
   (click)="onCardClick()"
 >
   @if (dataSourceType() === DataSourceType.Project) {
 
-  <div class="project-card_grid">
+  <div class="project-card_grid project-card_grid--project">
     <div class="project-card_period">
       {{ period() }}
     </div>
