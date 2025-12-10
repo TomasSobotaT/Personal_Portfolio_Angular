@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tsobota.cz/sitemap.xml
+
+Disallow: /assets/i18n/
+Disallow: /node_modules/
+Disallow: /scripts/
