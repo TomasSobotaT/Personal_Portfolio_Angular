@@ -19,4 +19,17 @@
     <changefreq>monthly</changefreq>
   </url>
 
+
+  <url>
+    <loc>https://tsobota.cz/assets/pdf/rodokmen.pdf</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://tsobota.cz/assets/pdf/Tomas_Sobota_NET_Developer_CV.pdf</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
 </urlset>
