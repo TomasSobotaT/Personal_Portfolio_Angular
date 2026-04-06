@@ -1,11 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { HELPERS } from '../../core/data-sources/helper.datasource';
 import { FooterBarComponent } from '../../shared/footer-bar/footer-bar.component';
 
 @Component({
   selector: 'app-helpers',
   standalone: true,
-  imports: [FooterBarComponent],
+  imports: [RouterLink, FooterBarComponent],
   templateUrl: './helpers.component.html',
   styleUrls: ['./helpers.component.scss'],
 })

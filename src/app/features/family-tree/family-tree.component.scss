@@ -1,0 +1,8 @@
+@import "../../../styles/variables.scss";
+
+.back-link {
+  color: $color-tertiary;
+  text-decoration: none;
+  display: inline-flex;
+  margin-bottom: 1.2rem;
+}

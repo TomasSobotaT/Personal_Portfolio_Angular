@@ -1,4 +1,5 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataSourceType } from '../../core/enums/data-source-enum';
 
 @Component({
@@ -8,6 +9,8 @@ import { DataSourceType } from '../../core/enums/data-source-enum';
   styleUrls: ['./project-card.component.scss'],
 })
 export class ProjectCardComponent {
+  private router = inject(Router);
+
   period = input<string>('');
   title = input.required<string>();
   subtitle = input<string>();
@@ -21,9 +24,16 @@ export class ProjectCardComponent {
 
   onCardClick() {
     const url = this.link();
+    const type = this.dataSourceType();
+
     if (!url) {
       return;
     }
-    window.open(url, '_blank', 'noopener');
+
+    if (type === DataSourceType.Other) {
+      this.router.navigate([url]);
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   }
 }
