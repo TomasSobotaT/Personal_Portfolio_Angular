@@ -1,10 +1,602 @@
-<div class="container">
+﻿<div class="container">
   <div class="row">
     <div class="course-page">
       <a class="course-page__back" routerLink="/knowledge">Zpět</a>
-      <h1 class="course-page__title text">
+      <h1 class="course-page__title text-center">
         Blazor Deep Dive: From Beginner to Advanced
       </h1>
+    </div>
+    <div class="course-page">
+      <div class="course-page__content">
+        <section class="notes-section">
+          <h2>Co je Blazor</h2>
+          <p>Blazor je component-based C# SPA application framework.</p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Render režimy</h2>
+          <p>Blazor má dnes 3 hlavní režimy renderování:</p>
+
+          <ul>
+            <li>
+              <strong>Static SSR</strong> – čisté server renderování.
+              Vyrenderuje se jen HTML, bez interaktivity.
+            </li>
+            <li>
+              <strong>Interactive Server</strong> – komunikace klienta s
+              backendem běží přes SignalR / websocket. Posílají se rozdíly v
+              DOM.
+            </li>
+            <li>
+              <strong>WebAssembly</strong> – tlustý klient. Do browseru se
+              pošlou soubory s C# kódem a runtime.
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>HTTP request → Blazor UI pipeline</h2>
+
+          <pre><code>app.MapRazorComponents&lt;App&gt;()</code></pre>
+
+          <p>
+            HTTP request na UI skončí zde. Odtud se vyrenderuje root komponenta
+            <strong>App.razor</strong>.
+          </p>
+
+          <h3>Soubory</h3>
+          <ul>
+            <li><strong>App.razor</strong> – HTML shell celé aplikace.</li>
+            <li>
+              <strong>Routes.razor</strong> – přes to jdou požadavky na
+              komponenty k zobrazení, layouty a 404 stránka.
+            </li>
+          </ul>
+
+          <h3>Blazor tagy</h3>
+          <ul>
+            <li>
+              <strong>&lt;Routes /&gt;</strong> – router outlet. Podle URL se
+              sem vloží stránka / komponenta s <code>&#64;page</code>.
+            </li>
+            <li>
+              <strong>&lt;HeadOutlet /&gt;</strong> – umožňuje dynamicky měnit
+              <code>&lt;head&gt;</code>, title, meta a linky.
+            </li>
+            <li>
+              <strong>&lt;ImportMap /&gt;</strong> – mapa JS modulů pro
+              prohlížeč, nutná pro načtení Blazor JS runtime.
+            </li>
+            <li>
+              <strong>&lt;ResourcePreloader /&gt;</strong> – performance
+              optimalizace. Vygeneruje
+              <code>&lt;link rel="preload"&gt;</code> pro Blazor assety a
+              zrychluje start.
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Komponenty</h2>
+          <ul>
+            <li>
+              <strong>Routovatelné komponenty</strong> – page components, mají
+              <code>&#64;page</code>.
+            </li>
+            <li><strong>Neroutovatelné komponenty</strong> – části stránek.</li>
+          </ul>
+
+          <pre><code>&#64;attribute [StreamRendering]</code></pre>
+
+          <p>V SSR umí streamovat data / renderování komponenty po částech.</p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Atributy</h2>
+          <ul>
+            <li>
+              <strong>[Parameter]</strong> – parametr komponenty, často
+              routovatelný, bere se z parentu nebo z routy.
+            </li>
+            <li>
+              <strong>[SupplyParameterFromQuery]</strong> – bere hodnotu z query
+              stringu, například <code>?id=123</code>.
+            </li>
+            <li>
+              <strong>[SupplyParameterFromForm]</strong> – binduje data z
+              formuláře na field / property.
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Lifecycle &amp; hooks</h2>
+
+          <ol>
+            <li>
+              <strong>Construct</strong>
+              <ul>
+                <li>Instantiation</li>
+                <li>
+                  <code>SetParametersAsync</code> – before the params are set
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Initialize</strong>
+              <ul>
+                <li><code>OnInitialized()</code> – při vytvoření komponenty</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Receive parameters</strong>
+              <ul>
+                <li>
+                  <code>OnParametersSetAsync()</code> – při změně parametru,
+                  případně můžu override v code-behind.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Render</strong>
+              <ul>
+                <li><code>OnAfterRenderAsync(bool firstRender)</code></li>
+                <li><code>ShouldRender</code></li>
+                <li><code>Dispose</code></li>
+              </ul>
+            </li>
+            <li><strong>Destruct</strong></li>
+          </ol>
+
+          <p>
+            Nová instance se vytvoří, když opustíš stránku, vrátíš se na ni,
+            nebo když ji vynutíš klíčem <code>&#64;key</code>.
+          </p>
+
+          <p>První se triggernou neasync verze a pak až async verze.</p>
+
+          <h3>Problém</h3>
+          <p>
+            Při SSR + prerenderingu se každá komponenta může vytvořit 2×: jednou
+            při GET requestu a podruhé při navázání SignalR spojení.
+          </p>
+
+          <h3>Řešení</h3>
+          <ol>
+            <li>
+              <code>OnAfterRender(bool firstRender)</code> – workaround pro
+              věci, které chci pustit až po renderu.
+            </li>
+            <li>
+              V <code>OnInitialized()</code> si ohlídat interaktivní režim.
+            </li>
+          </ol>
+
+          <pre><code>protected override void OnInitialized()
+&#123;
+    if (renderInfo.IsInteractive)
+    &#123;
+        // Tady se to zavolá až při interaktivním SignalR spojení,
+        // ne při prvním GET requestu
+    &#125;
+&#125;</code></pre>
+        </section>
+
+        <section class="notes-section">
+          <h2>Forms</h2>
+
+          <pre><code>&lt;EditForm Model="model" FormName="name" OnSubmit="Submit"&gt;</code></pre>
+
+          <p>
+            Základní stavební kámen pro práci s formuláři v Blazoru. Řeší
+            validaci, submit, modely atd.
+          </p>
+
+          <pre><code>Enhance="true"</code></pre>
+
+          <p>
+            Zabrání plnému reloadu stránky při odeslání formuláře. Udělá se jen
+            fetch potřebných dat z backendu.
+          </p>
+
+          <pre><code>&lt;InputText &#64;bind-Value="model.Name" /&gt;</code></pre>
+
+          <p>Input ve formuláři, binding na property v modelu.</p>
+
+          <h3>Validace</h3>
+          <ul>
+            <li>atributy na fieldech v modelu</li>
+            <li>vlastní validace, třeba FluentValidation</li>
+          </ul>
+
+          <pre><code>OnValidSubmit="Submit"</code></pre>
+          <p>Zavolá se jen když je formulář validní.</p>
+
+          <pre><code>&lt;DataAnnotationsValidator /&gt;</code></pre>
+          <p>Zapne validaci pomocí DataAnnotations atributů.</p>
+
+          <pre><code>&lt;ValidationSummary /&gt;</code></pre>
+          <p>Zobrazuje validační chyby.</p>
+
+          <pre><code>&lt;input type="text" &#64;onchange="HandleServerFilterChange" /&gt;</code></pre>
+
+          <pre><code>private void HandleServerFilterChange(ChangeEventArgs args)
+&#123;
+    // args.Value = hodnota v inputu
+&#125;</code></pre>
+
+          <h3>Binding</h3>
+          <ul>
+            <li><code>&#64;bind-value="property"</code> – u inputů apod.</li>
+            <li>
+              <code>&#64;bind-Value="property"</code> – u komponent jako
+              InputText a ve forms scénářích.
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Routování / navigace</h2>
+
+          <pre><code>&#64;inject NavigationManager NavigationManager</code></pre>
+
+          <p>Podobné jako Router v Angularu.</p>
+
+          <pre><code>NavigationManager.NavigateTo("/servers");</code></pre>
+          <p>Naviguje na danou stránku.</p>
+
+          <pre><code>NavigationManager.Refresh();</code></pre>
+          <p>V SSR refreshne stránku, třeba po POSTu.</p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Interactive Server</h2>
+
+          <h3>Program.cs</h3>
+          <pre><code>builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+
+app.MapRazorComponents&lt;App&gt;()
+    .AddInteractiveServerRenderMode();</code></pre>
+
+          <h3>Globální zapnutí IS</h3>
+          <pre><code>&lt;Routes &#64;rendermode="InteractiveServer" /&gt;</code></pre>
+
+          <h3>Lokální zapnutí IS</h3>
+          <pre><code>&lt;ServerComponent &#64;rendermode="InteractiveServer" /&gt;</code></pre>
+
+          <p>
+            Doporučení: ne všechno musí být Interactive Server. Některé stránky
+            můžou zůstat SSR.
+          </p>
+
+          <pre><code>&#64;attribute [ExcludeFromInteractiveRouting]</code></pre>
+
+          <p>Na page komponentě udělá výjimku z interaktivního routování.</p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Input / Output mezi komponentami</h2>
+
+          <h3>Input</h3>
+          <pre><code>[Parameter]
+public string? Property &#123; get; set; &#125;</code></pre>
+
+          <p>
+            Parent nastaví hodnotu při vstupu do komponenty. Na změny můžu
+            reagovat třeba v <code>OnParametersSet()</code>.
+          </p>
+
+          <h3>Output</h3>
+          <p>V child komponentě:</p>
+
+          <pre><code>[Parameter]
+public EventCallback&lt;T&gt; CallbackName &#123; get; set; &#125;
+
+private async Task OnSomethingChanged(T value)
+&#123;
+    await CallbackName.InvokeAsync(value);
+&#125;</code></pre>
+
+          <p>V parent komponentě:</p>
+
+          <pre><code>&lt;ChildComponent CallbackName="HandleMethod" /&gt;</code></pre>
+
+          <h3>Reference na child komponentu</h3>
+          <pre><code>&lt;CityListComponent &#64;ref="cityListComponent" /&gt;</code></pre>
+
+          <pre><code>private CityListComponent? cityListComponent;</code></pre>
+        </section>
+
+        <section class="notes-section">
+          <h2>Cascading value</h2>
+
+          <pre><code>&lt;CascadingValue Name="SelectedCity" Value="&#64;selectedCity"&gt;
+    ...
+&lt;/CascadingValue&gt;</code></pre>
+
+          <p>
+            Předá <code>selectedCity</code> všem child komponentám, které si to
+            můžou chytit takto:
+          </p>
+
+          <pre><code>[CascadingParameter(Name = "SelectedCity")]
+public string? SelectedCity &#123; get; set; &#125;</code></pre>
+
+          <p>
+            Přes hranici SSR → InteractiveServer nejde použít cascading value.
+            Tam je lepší posílat data normálně přes parametry.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Generic komponenty</h2>
+
+          <h3>1) Template components</h3>
+          <p>
+            Podobné jako <code>ngTemplate</code> v Angularu. Je to obyčejná
+            komponenta, která má jako parametr <code>RenderFragment</code> nebo
+            <code>RenderFragment&lt;T&gt;</code>.
+          </p>
+
+          <pre><code>[Parameter]
+public RenderFragment? ChildContent &#123; get; set; &#125;</code></pre>
+
+          <h3>2) &#64;typeparam TItem</h3>
+
+          <pre><code>&#64;typeparam TItem
+
+&lt;Virtualize Items="Items" Context="item"&gt;
+    &#64;Row(item)
+&lt;/Virtualize&gt;
+
+&#64;code
+&#123;
+    [Parameter]
+    public List&lt;TItem&gt; Items &#123; get; set; &#125; = new();
+
+    [Parameter]
+    public RenderFragment&lt;TItem&gt;? Row &#123; get; set; &#125;
+&#125;</code></pre>
+        </section>
+
+        <section class="notes-section">
+          <h2>Tipy</h2>
+
+          <h3>Stránka bez layoutu</h3>
+          <pre><code>&#64;layout null</code></pre>
+
+          <h3>Explicit Razor expression</h3>
+          <pre><code>&#64;(condition ? "true" : "false")</code></pre>
+
+          <h3>Foreach</h3>
+          <pre><code>&#64;foreach (var server in servers)
+&#123;
+    &lt;div&gt;&#64;server.Name&lt;/div&gt;
+&#125;</code></pre>
+
+          <h3>Console log</h3>
+          <pre><code>await JS.InvokeVoidAsync("console.log", $"Server name: &#123;server.Name&#125;");</code></pre>
+
+          <h3>Static assets fingerprint</h3>
+          <p>Od .NET 10 hash ke statickým věcem jako CSS, JS atd.</p>
+
+          <h3>Hydratace</h3>
+          <p>
+            Hydratace = připojení HTML v prohlížeči k živé komponentě, jejíž
+            .NET runtime běží na serveru. Typicky v Interactive Server.
+          </p>
+
+          <h3>Virtualizace v Blazoru</h3>
+          <p>
+            Nevyrenderují se všechny položky seznamu, ale jen ty, které jsou
+            vidět. Je to takový chytrý foreach, který do DOMu dává jen viditelné
+            položky.
+          </p>
+
+          <pre><code>&lt;Virtualize Items="Items" Context="item"&gt;
+    &lt;div&gt;&#64;item.Name&lt;/div&gt;
+&lt;/Virtualize&gt;</code></pre>
+
+          <h3>Prerendering</h3>
+          <p>
+            Prerendering je zapnutý defaultně v Interactive Server i ve
+            WebAssembly. Stránka se poprvé vyrenderuje na serveru a pak
+            pokračuje interaktivní část.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Render</h2>
+
+          <p>Kdy se komponenta přerenderuje:</p>
+          <ul>
+            <li>při prvním renderu</li>
+            <li>při změně parametru</li>
+            <li>při změně CascadingParameter</li>
+            <li>
+              po Blazor eventu (<code>&#64;onclick</code>,
+              <code>&#64;onchange</code>, ...)
+            </li>
+            <li>po zavolání <code>StateHasChanged()</code></li>
+            <li>po dokončení některých async lifecycle metod</li>
+          </ul>
+
+          <p>
+            Render neproběhne, když <code>ShouldRender()</code> vrátí
+            <code>false</code>.
+          </p>
+
+          <p>
+            Pokud je parametr komplexní / mutable typ, child komponenta se
+            většinou přerenderuje vždy.
+          </p>
+
+          <ul>
+            <li>buď použít <code>ShouldRender()</code></li>
+            <li>
+              ale hlavně tehdy, když je render drahý nebo se parent často mění
+            </li>
+          </ul>
+
+          <p>
+            <code>InvokeAsync</code> v Blazoru zařadí tvoji akci do správné
+            fronty / kontextu rendereru, aby se bezpečně provedla práce s
+            komponentou a případný render.
+          </p>
+
+          <p>
+            <code>[PersistentState]</code> je atribut pro jednorázové předání
+            dat ze serveru do klientské Blazor části při startu aplikace.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Události</h2>
+          <ul>
+            <li><code>&#64;onclick</code></li>
+            <li><code>&#64;onchange</code> – až při ztrátě focusu prvku</li>
+            <li><code>&#64;oninput</code> – hned jak se změní hodnota</li>
+            <li><code>&#64;bind-value="property"</code> – v inputech apod.</li>
+            <li>
+              <code>&#64;bind-Value="property"</code> – u komponent a ve
+              formulářových scénářích
+            </li>
+            <li><code>&#64;key</code> – mapování ve foreach podle identity</li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Routing and navigation</h2>
+          <ul>
+            <li>
+              <strong>Static routing</strong> – každý požadavek = HTTP request.
+            </li>
+            <li>
+              <strong>Interactive routing</strong> – první request je statický,
+              každá další navigace může běžet přes SignalR.
+            </li>
+            <li>
+              <strong>WebAssembly</strong> – routing i navigace se řeší na
+              klientovi, bez nutnosti posílat každý přechod na server. Server se
+              používá hlavně pro data a API volání.
+            </li>
+          </ul>
+
+          <pre><code>&lt;NavigationLock OnBeforeInternalNavigation="ConfirmLeave" /&gt;</code></pre>
+
+          <p>
+            Použiješ, když se chceš uživatele zeptat, jestli opravdu odejít ze
+            stránky.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>State management</h2>
+
+          <h3>1) Přes URL</h3>
+          <p>Route parametr:</p>
+          <pre><code>/product/&#123;id:int&#125;</code></pre>
+
+          <p>Navigace:</p>
+          <pre><code>NavigationManager.NavigateTo("/product/5");</code></pre>
+
+          <p>Query string:</p>
+          <pre><code>/products?page=2&amp;filter=shoes</code></pre>
+
+          <pre><code>[SupplyParameterFromQuery]</code></pre>
+
+          <h3>2) localStorage / sessionStorage</h3>
+          <p>Spíš na persistenci stavu, ne jako hlavní univerzální řešení.</p>
+          <p>Ukládání může být přes injectovanou storage service.</p>
+
+          <h3>3) State management přes service / state container</h3>
+          <p>
+            Třída zaregistrovaná do DI, obvykle jako <code>AddScoped</code>. Ve
+            WebAssembly často spíš singleton. Pak se injectuje do komponent a
+            sdílí stav napříč aplikací.
+          </p>
+
+          <h3>Observer pattern</h3>
+          <ul>
+            <li>
+              Komponenta se přihlásí na event (<code>OnChange += ...</code>),
+              takže poslouchá změny.
+            </li>
+            <li>
+              Když se ve AppState něco změní, zavolá se
+              <code>OnChange?.Invoke()</code>.
+            </li>
+            <li>
+              Tím se spustí handler, který zavolá
+              <code>StateHasChanged()</code>.
+            </li>
+            <li>Výsledek: komponenta se znovu překreslí s novými daty.</li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Auth</h2>
+
+          <pre><code>&#64;attribute [Authorize]</code></pre>
+
+          <pre><code>&lt;AuthorizeView&gt;
+    &lt;Authorized&gt;
+        Přihlášený: &#64;context.User.Identity?.Name
+    &lt;/Authorized&gt;
+    &lt;NotAuthorized&gt;
+        Nejsi přihlášený.
+    &lt;/NotAuthorized&gt;
+&lt;/AuthorizeView&gt;</code></pre>
+
+          <ul>
+            <li>
+              Při navázání spojení přes SignalR se auth stav bere pro dané
+              spojení.
+            </li>
+            <li>
+              <code>AddAuthenticationStateSerialization()</code> – serializace
+              auth stavu pro UI.
+            </li>
+            <li>
+              <code>AddCascadingAuthenticationState()</code> – zpřístupní
+              uživatele komponentám.
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>WebAssembly</h2>
+          <ul>
+            <li>jeden projekt backend a jeden frontend</li>
+            <li>
+              v Blazor WebAssembly nelze bezpečně použít
+              ProtectedSessionStorage, protože nemáš serverový secret pro
+              šifrování
+            </li>
+            <li>
+              místo toho se používá sessionStorage / localStorage přes JS
+              interop, ale bez skutečné ochrany pro citlivá data
+            </li>
+          </ul>
+
+          <pre><code>&#64;inject IJSRuntime JSRuntime</code></pre>
+
+          <p>Můžu používat JS metody.</p>
+
+          <p>
+            JS runtime se používá pro volání JavaScriptu a přístup k browser
+            API.
+          </p>
+
+          <h3>Debug</h3>
+          <ul>
+            <li>Visual Studio</li>
+            <li>browser devtools</li>
+            <li><code>Console.WriteLine</code> – často spolehlivé</li>
+          </ul>
+        </section>
+      </div>
     </div>
   </div>
   <app-footer-bar></app-footer-bar>
