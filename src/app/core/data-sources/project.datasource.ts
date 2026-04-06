@@ -7,10 +7,21 @@ export const PROJECTS: Project[] = [
     title: 'Tomáš Sobota Angular Portfolio Website',
     description: 'Stránky osobního portfolia postavené na Angularu',
     tags: [],
-    imageUrl: '/assets/images/projects/asp_pm_1.png',
+    imageUrl: '',
   },
   {
     id: '1',
+    period: '2026',
+    title: 'Reporting & Data Integration',
+    description: `Vývoj a údržba mikroservis pro generování reportů z interních firemních
+      dat a externích zdrojů (MPSV a další portály – API integrace a scraping).
+      Realizace ETL procesů pro migraci a transformaci dat pomocí SSIS do
+      datového skladu. Tvorba a správa reportů v Power BI.`,
+    tags: [],
+    imageUrl: '/assets/images/projects/reporting.png',
+  },
+  {
+    id: '2',
     period: '2025',
     title: 'Payroll & Accounting Migration',
     description: `Spolupráce na migraci a modernizaci mzdového a účetního systému.
@@ -22,7 +33,7 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/images/projects/payroll.png',
   },
   {
-    id: '2',
+    id: '3',
     period: '2025',
     title: 'Digital Signature Integration (Signi)',
     description: `Vývoj API/mikroservices pro digitální podepisování dokumentů, webhooky a správu signovacích procesů.`,
@@ -30,7 +41,7 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/images/projects/signi.png',
   },
   {
-    id: '3',
+    id: '4',
     period: '2024',
     title: 'Payroll Data Integration Microservice',
     description: `API/mikroservice pro stažení mzdových podkladů, jejich transformaci a export do účetnictví.`,
@@ -38,7 +49,7 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/images/projects/payroll_01.png',
   },
   {
-    id: '4',
+    id: '5',
     period: '2024',
     title: 'Generic Codebook Microservice',
     description: `Generická mikroservice pro správu číselníků postavená na minimal API, multi-tenant, reflektivní mapování.`,
@@ -46,7 +57,7 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/images/projects/codebook.png',
   },
   {
-    id: '5',
+    id: '6',
     period: '2023',
     title: 'Legacy Desktop System Maintenance',
     description: `Údržba a vývoj firemní Windows Forms aplikace (.NET Framework), bugfixing a přidávání funkcí. Migrace logiky do nových microservices.`,

@@ -3,6 +3,23 @@ import { Project } from '../models/project.model';
 export const EDUCATIONS: Project[] = [
   {
     id: '1',
+    period: '04/2026',
+    title: 'Blazor Deep Dive: From Beginner to Advanced',
+    description:
+      'Kurz blazoru od úvodu přes statické SSR, IS a webAssembly až po komponenty, lifecycle, routing a state management.',
+    tags: ['Blazor', 'IS', 'WebAssembly'],
+    link: 'https://www.udemy.com/course/blazor-deep-dive-from-beginner-to-advanced',
+  },
+  {
+    id: '2',
+    period: '02/2026',
+    title: 'Microsoft Azure – The Complete Guide',
+    description: 'Kompletní kurz Microsoft Azure na Udemy.',
+    tags: ['Microsoft Azure', 'Cloud'],
+    link: 'https://www.udemy.com/course/microsoft-azure-from-zero-to-hero-the-complete-guide',
+  },
+  {
+    id: '3',
     period: '12/2025',
     title: 'Kompletní administrace Microsoft SQL Serveru',
     description:
@@ -10,16 +27,8 @@ export const EDUCATIONS: Project[] = [
     tags: ['MS-SQL', 'T-SQL', 'Databáze'],
     link: 'https://www.gopas.cz/kompletni-administrace-microsoft-sql-serveru_goc6345',
   },
-  // {
-  //   id: '1',
-  //   period: '10/2025',
-  //   title: 'Microsoft Azure – The Complete Guide',
-  //   description: 'Kompletní kurz Microsoft Azure na Udemy.',
-  //   tags: ['Microsoft Azure', 'Cloud'],
-  //   link: 'https://www.udemy.com/course/microsoft-azure-from-zero-to-hero-the-complete-guide',
-  // },
   {
-    id: '2',
+    id: '4',
     period: '09/2025',
     title: 'Angular – The Complete Guide (2025 Edition)',
     description: 'Komplexní kurz Angularu a Typescriptu na Udemy.',
@@ -27,7 +36,7 @@ export const EDUCATIONS: Project[] = [
     link: 'https://www.udemy.com/course/the-complete-guide-to-angular-2',
   },
   {
-    id: '3',
+    id: '5',
     period: '07/2025',
     title: 'Optimalizace výkonu, ladění a škálovatelnost aplikací',
     description:
@@ -36,7 +45,7 @@ export const EDUCATIONS: Project[] = [
     link: 'https://www.gopas.cz/optimalizace-vykonu-ladeni-a-skalovatelnost-aplikaci_goc2126',
   },
   {
-    id: '4',
+    id: '6',
     period: '07/2023',
     title: 'ITNetwork - programátor WWW aplikací C# .NET',
     description:

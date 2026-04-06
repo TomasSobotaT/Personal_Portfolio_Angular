@@ -167,7 +167,68 @@ export const HELPERS: HelperCategory[] = [
       { name: 'REST API tester – Hoppscotch', url: 'https://hoppscotch.io' },
     ],
   },
+  {
+    id: 'CLOUD',
+    title: 'Cloud',
+    items: [
+      {
+        name: 'Microsoft Azure',
+        url: 'https://azure.microsoft.com/cs-cz',
+      },
+      {
+        name: 'Google Cloud',
+        url: 'https://cloud.google.com',
+      },
+      {
+        name: 'AWS (Amazon Web Services)',
+        url: 'https://aws.amazon.com',
+      },
+      {
+        name: 'Hetzner',
+        url: 'https://www.hetzner.com',
+      },
+    ],
+  },
+  {
+    id: 'DOCKER_K8S',
+    title: 'Docker / Kubernetes',
+    items: [
+      {
+        name: 'Docker Hub',
+        url: 'https://hub.docker.com',
+      },
+      {
+        name: 'Microsoft Artifact Registry (MCR)',
+        url: 'https://mcr.microsoft.com',
+      },
 
+      // DOPORUČENÉ NAVÍC
+      {
+        name: 'GitHub Container Registry',
+        url: 'https://ghcr.io',
+      },
+      {
+        name: 'Google Container Registry / Artifact Registry',
+        url: 'https://cloud.google.com/artifact-registry',
+      },
+      {
+        name: 'AWS Elastic Container Registry (ECR)',
+        url: 'https://aws.amazon.com/ecr/',
+      },
+      {
+        name: 'Kubernetes (oficiální web)',
+        url: 'https://kubernetes.io',
+      },
+      {
+        name: 'Helm (package manager pro Kubernetes)',
+        url: 'https://helm.sh',
+      },
+      {
+        name: 'Play with Docker (online playground)',
+        url: 'https://labs.play-with-docker.com/',
+      },
+    ],
+  },
   {
     id: 'AI',
     title: 'AI',
@@ -185,13 +246,33 @@ export const HELPERS: HelperCategory[] = [
       },
       { name: 'AI generátor hudby – Suno', url: 'https://suno.com/' },
       { name: 'Google AI labs', url: 'https://labs.google/' },
-      { name: 'AI knihovna – Hugging Face', url: 'https://huggingface.co' },
       {
         name: 'AI trénink – Teachable Machine',
         url: 'https://teachablemachine.withgoogle.com',
       },
       { name: 'AI chatbot – Bing Chat', url: 'https://www.bing.com/chat' },
       { name: 'AI chatbot – Google Bard', url: 'https://bard.google.com' },
+
+      {
+        name: 'OpenAI platform – modely / API',
+        url: 'https://platform.openai.com/',
+      },
+      {
+        name: 'GitHub Marketplace – modely a nástroje',
+        url: 'https://github.com/marketplace',
+      },
+      {
+        name: 'Hugging Face – modely, datasety, ML aplikace',
+        url: 'https://huggingface.co/',
+      },
+      {
+        name: 'Ollama – lokální běh LLM modelů',
+        url: 'https://ollama.com/',
+      },
+      {
+        name: 'LM Studio',
+        url: 'https://lmstudio.ai',
+      },
     ],
   },
 
