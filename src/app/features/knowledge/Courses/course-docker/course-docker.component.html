@@ -1,9 +1,634 @@
 <div class="container">
   <div class="row">
-    <section class="course-page">
+    <div class="course-page">
       <a class="course-page__back" routerLink="/knowledge">Zpět</a>
-      <h1 class="course-page__title">Docker</h1>
-    </section>
+      <h1 class="course-page__title text-center">Docker</h1>
+    </div>
+
+    <div class="course-page__content">
+      <section class="notes-section">
+        <h2>SSH tunel / připojení na AWS VM</h2>
+
+        <pre><code>ssh -i "example-1.pem" ec2-user&#64;ec2-98-92-181-232.compute-1.amazonaws.com</code></pre>
+      </section>
+
+      <section class="notes-section">
+        <h2>Základní pojmy</h2>
+
+        <ul>
+          <li>
+            <strong>Docker Image</strong> – balíček aplikace se všemi
+            závislostmi potřebnými ke spuštění.
+          </li>
+          <li>
+            <strong>Docker Image</strong> – neměnná šablona, typicky vytvořená z
+            Dockerfile. :contentReference[oaicite:1]&#123;index=1&#123;
+          </li>
+          <li>
+            <strong>Kontejner</strong> – běžící instance Docker image, tedy
+            izolovaný proces s vlastním běhovým stavem.
+            :contentReference[oaicite:2]&#123;index=2&#125;
+          </li>
+          <li>
+            <strong>Docker Compose</strong> – nástroj pro správu více kontejnerů
+            najednou pomocí YAML konfigurace.
+            :contentReference[oaicite:3]&#123;index=3&#125;
+          </li>
+          <li>
+            <strong>Kubernetes</strong> – orchestrátor kontejnerů pro správu,
+            škálování a provoz napříč více servery.
+            :contentReference[oaicite:4]&#123;index=4&#125;
+          </li>
+          <li>
+            <strong>Dockerfile</strong> – soubor popisující, jak se image
+            sestaví. :contentReference[oaicite:5]&#123;index=5&#125;
+          </li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Data a volumes</h2>
+
+        <p>
+          Defaultně se data ukládají do kontejneru. Když kontejner smažu, o ta
+          data přijdu. Proto řeším volumes nebo bind mounty.
+          :contentReference[oaicite:6]&#123;index=6&#125;
+        </p>
+
+        <h3>Volumes</h3>
+        <ul>
+          <li>soubory mimo samotný kontejner</li>
+          <li>
+            nesmažou se jen tím, že zastavím nebo znovu vytvořím kontejner
+          </li>
+          <li>jsou managované Dockerem</li>
+        </ul>
+
+        <h4>Anonymous Volumes</h4>
+        <pre><code>docker run -v /app/data my-image</code></pre>
+        <p>
+          Docker vytvoří anonymní volume. Typicky žije, dokud existuje nebo je
+          navázaný na kontejner a Docker ho spravuje.
+          :contentReference[oaicite:7]&#123;index=7&#125;
+        </p>
+
+        <h4>Named Volumes</h4>
+        <pre><code>docker run -v data:/app/data my-image</code></pre>
+        <p>
+          Named volume má svoje jméno a přetrvá i po smazání konkrétního
+          kontejneru, dokud ho nesmažu zvlášť.
+          :contentReference[oaicite:8]&#123;index=8&#125;
+        </p>
+
+        <h3>Bind Mounts</h3>
+        <pre><code>docker run -v /path/to/code:/app/code my-image</code></pre>
+
+        <ul>
+          <li>moje data, mnou managovaná</li>
+          <li>připojí adresář z hosta do běžícího kontejneru</li>
+          <li>kontejner čte a zapisuje přímo do těch dat na hostiteli</li>
+          <li>nemusím při změně kódu znovu buildit image</li>
+        </ul>
+
+        <p>
+          To je super hlavně při vývoji. Bind mounty jsou přímo svázané se
+          strukturou souborů hostitele.
+          :contentReference[oaicite:9]&#123;index=9&#125;
+        </p>
+
+        <h4>Read-only bind mount</h4>
+        <pre><code>docker run -v /path/to/code:/app/code:ro my-image</code></pre>
+        <p>
+          Připojení jen pro čtení. Docker bind mount podporuje režim
+          <code>readonly</code> / <code>ro</code>.
+          :contentReference[oaicite:10]&#123;index=10&#125;
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>ARG a ENV</h2>
+
+        <h3>ENV</h3>
+        <pre><code>docker run -e PORT=8000 my-image</code></pre>
+        <p>Proměnné prostředí při běhu kontejneru.</p>
+
+        <h3>ARG</h3>
+        <pre><code>ARG DEFAULT_PORT=80</code></pre>
+        <p>Argument použitelný v Dockerfile při build procesu.</p>
+
+        <pre><code>docker build --build-arg DEFAULT_PORT=8000 -t my-image .</code></pre>
+
+        <p>
+          <code>ARG</code> je build-time proměnná, <code>ENV</code> bývá runtime
+          proměnná v image nebo kontejneru.
+          :contentReference[oaicite:11]&#123;index=11&#125;
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Networking</h2>
+
+        <h3>Web</h3>
+        <p>
+          Kontejner může normálně komunikovat se sítí a webem podle toho, jak je
+          spuštěný a namapovaný.
+        </p>
+
+        <h3>Container -&gt; localhost app</h3>
+        <p>
+          Uvnitř kontejneru není <code>localhost</code> tvůj počítač, ale sám
+          kontejner.
+        </p>
+        <p>
+          Proto se pro přístup na hostitele často používá
+          <code>host.docker.internal</code>.
+        </p>
+
+        <h3>Container -&gt; Container</h3>
+        <ul>
+          <li>mohu si vytvořit vlastní Docker síť</li>
+          <li>
+            kontejnery v jedné síti spolu komunikují přes jméno služby nebo
+            kontejneru
+          </li>
+        </ul>
+
+        <pre><code>docker network create my-network</code></pre>
+
+        <pre><code>docker run --network my-network --name mongodb mongo</code></pre>
+
+        <pre><code>docker run --network my-network my-backend</code></pre>
+
+        <p>
+          V Compose se tohle řeší ještě pohodlněji přes názvy služeb. Compose
+          umí definovat služby, sítě i volumes v jednom souboru.
+          :contentReference[oaicite:12]&#123;index=12&#125;
+        </p>
+
+        <p>
+          FE v kontejneru často volá BE jinak podle toho, kde opravdu běží
+          klient. Když FE běží v browseru, není to totéž jako komunikace
+          kontejner-kontejner.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Docker Compose</h2>
+
+        <p>
+          Docker Compose v podstatě nahrazuje víc <code>docker run</code> a
+          <code>docker build</code> příkazů jedním YAML souborem. Compose
+          definuje služby, sítě a volumes.
+          :contentReference[oaicite:13]&#123;index=13&#125;
+        </p>
+
+        <h3>Spuštění</h3>
+        <pre><code>docker compose up</code></pre>
+        <pre><code>docker compose up -d</code></pre>
+        <pre><code>docker compose up --build</code></pre>
+        <pre><code>docker compose build</code></pre>
+
+        <h3>Zastavení</h3>
+        <pre><code>docker compose down</code></pre>
+        <pre><code>docker compose down -v</code></pre>
+
+        <p>
+          <code>docker compose up</code> buildí, vytváří a startuje služby podle
+          konfigurace, pokud už neběží.
+          :contentReference[oaicite:14]&#123;index=14&#125;
+        </p>
+
+        <p>
+          V YAML mohu odkazovat na image, nebo na Dockerfile přes
+          <code>build</code>, a zároveň si doplnit porty, volumes, environment
+          proměnné a závislosti mezi službami.
+          :contentReference[oaicite:15]&#123;index=15&#125;
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Utility containers</h2>
+
+        <p>
+          Mohu spouštět jednorázové utility kontejnery, třeba Node kontejner jen
+          na založení projektu, aniž bych Node instaloval k sobě do systému.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Deploying Docker container</h2>
+
+        <ul>
+          <li>AWS</li>
+          <li>Azure</li>
+          <li>Google Cloud</li>
+        </ul>
+
+        <p>
+          Můžu nasadit kontejner přímo na VM: nainstalovat Docker, připojit se
+          přes SSH, stáhnout image z registru a rozjet kontejner.
+        </p>
+
+        <p>Nebo použiji container service / cluster řešení.</p>
+
+        <p>
+          Pozor na škálování databází – dva kontejnery nemohou jen tak bezpečně
+          zapisovat do stejného databázového souboru, pokud ta technologie není
+          na sdílený zápis stavěná.
+        </p>
+
+        <p>
+          U FE aplikací bývá často jiný Dockerfile pro dev a jiný pro prod. V
+          produkci typicky jen buildnu statické soubory a ty pak servíruje jiný
+          runtime, třeba nginx.
+        </p>
+
+        <h3>Multistage builds</h3>
+        <p>
+          Stejně jako u .NET: nejdřív build stage, potom runtime stage.
+          Dockerfile reference popisuje vícestupňové buildy přes víc
+          <code>FROM</code> instrukcí.
+          :contentReference[oaicite:16]&#123;index=16&#125;
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Dockerfile</h2>
+
+        <p>
+          Dockerfile zároveň vytváří vrstvy image. Každá vrstva je
+          cacheovatelná, takže pořadí instrukcí je důležité. Když změním něco
+          nahoře, přebuildí se i vrstvy pod tím. Docker build cache a Dockerfile
+          reference to popisují přímo.
+          :contentReference[oaicite:17]&#123;index=17&#125;
+        </p>
+
+        <h3>Základní instrukce</h3>
+
+        <pre><code>FROM node</code></pre>
+        <p>Z jakého base image se nový image staví.</p>
+
+        <pre><code>WORKDIR /app</code></pre>
+        <p>Nastaví pracovní složku v kontejneru.</p>
+
+        <pre><code>COPY . .</code></pre>
+        <p>Zkopíruje obsah build contextu do image.</p>
+
+        <pre><code>ARG DEFAULT_PORT=80</code></pre>
+        <p>Build argument.</p>
+
+        <pre><code>ENV PORT=$DEFAULT_PORT</code></pre>
+        <p>Proměnná prostředí.</p>
+
+        <pre><code>EXPOSE 80</code></pre>
+        <p>
+          Jen deklarace portu, ne reálné publikování ven. Porty se reálně mapují
+          při <code>docker run -p</code>.
+          :contentReference[oaicite:18]&#123;index=18&#125;
+        </p>
+
+        <pre><code>VOLUME ["/app/feedback"]</code></pre>
+        <p>Mount point pro volume.</p>
+
+        <pre><code>CMD ["node", "server.js"]</code></pre>
+        <p>Výchozí příkaz při startu kontejneru.</p>
+
+        <pre><code>ENTRYPOINT ["node", "server.js"]</code></pre>
+        <p>Entry point, který se spouští vždy jako základ startu kontejneru.</p>
+
+        <h3>.NET Dockerfile</h3>
+        <pre><code>FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "MyApi.dll"]</code></pre>
+      </section>
+
+      <section class="notes-section">
+        <h2>Obecně k Dockeru</h2>
+
+        <ul>
+          <li>
+            mohu mít i Windows image s Windows jádrem, ale jsou větší a
+            potřebují odpovídající host prostředí
+          </li>
+          <li>default je většinou Linux world</li>
+          <li>
+            image jsou read-only, běhový zápis jde do writable vrstvy kontejneru
+          </li>
+          <li>do kontejneru mohu za běhu kopírovat věci</li>
+          <li>
+            pořadí volumes a bind mountů může přepisovat obsah z předchozích
+            vrstev nebo mountů
+          </li>
+          <li>
+            <code>.dockerignore</code> funguje podobně jako
+            <code>.gitignore</code>
+          </li>
+          <li><code>name:tag</code> = název image a konkrétní tag</li>
+        </ul>
+
+        <h3>Základní příkazy</h3>
+        <pre><code>docker build -t my-image:latest .</code></pre>
+        <pre><code>docker run -d -p 3000:80 --name my-container my-image:latest</code></pre>
+        <pre><code>docker stop my-container</code></pre>
+        <pre><code>docker ps</code></pre>
+        <pre><code>docker logs my-container</code></pre>
+        <pre><code>docker run --rm my-image</code></pre>
+
+        <h3>Named volume</h3>
+        <pre><code>docker run -v feedback:/app/feedback my-image</code></pre>
+
+        <h3>Alpine image</h3>
+        <p>
+          Alpine image bývá menší, ale někdy přináší víc problémů s
+          kompatibilitou nebo debugováním.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Docker Compose YAML</h2>
+
+        <pre><code>services:
+  mongodb:
+    image: "mongo"
+    volumes:
+      - data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: max
+      MONGO_INITDB_ROOT_PASSWORD: secret
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      MONGODB_USERNAME: max
+      MONGODB_PASSWORD: secret
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+volumes:
+  data:
+  logs:</code></pre>
+
+        <p>
+          Compose specification dnes používá sekce jako <code>services</code> a
+          top-level <code>volumes</code>. Named volumes se definují nahoře a pak
+          se používají ve službách.
+          :contentReference[oaicite:19]&#123;index=19&#125;
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Kubernetes</h2>
+
+        <p>
+          Kubernetes je v podstatě orchestrátor kontejnerů, něco jako „Docker
+          Compose pro víc VM / serverů“, ale mnohem silnější. Řeší automatizaci
+          nasazení, škálování a správu kontejnerových workloadů.
+          :contentReference[oaicite:20]&#123;index=20&#125;
+        </p>
+
+        <ul>
+          <li>nahrazuje vypadlé kontejnery</li>
+          <li>škáluje aplikace</li>
+          <li>distribuuje požadavky</li>
+        </ul>
+
+        <h3>Cluster</h3>
+        <ul>
+          <li><strong>Control Plane</strong> – řídicí vrstva clusteru</li>
+          <li>
+            <strong>Worker Nodes</strong> – stroje, které skutečně spouští
+            workload
+          </li>
+        </ul>
+
+        <h3>Pod</h3>
+        <ul>
+          <li>nejmenší jednotka, se kterou Kubernetes pracuje</li>
+          <li>jeden nebo více kontejnerů běžících společně</li>
+          <li>
+            kontejnery v Podu sdílí síťový namespace, takže spolu mluví přes
+            <code>localhost</code>
+          </li>
+          <li>Pod má vlastní IP v clusteru, ale ta není stabilní navždy</li>
+          <li>
+            Pod sám o sobě není perzistentní objekt pro dlouhodobý přístup
+            zvenku
+          </li>
+        </ul>
+
+        <p>
+          Oficiální dokumentace Pod popisuje právě jako nejmenší nasaditelnou
+          jednotku a Service dokumentace řeší stabilní přístup přes Service IP a
+          load balancing. :contentReference[oaicite:21]&#123;index=21&#125;
+        </p>
+
+        <h3>Další části</h3>
+        <ul>
+          <li><strong>kubelet</strong> – agent na worker nodu</li>
+          <li><strong>API Server</strong></li>
+          <li><strong>Scheduler</strong></li>
+          <li><strong>Controller Manager</strong></li>
+        </ul>
+
+        <h3>Nástroje</h3>
+        <ul>
+          <li>
+            <strong>kubectl</strong> – oficiální CLI pro ovládání clusteru.
+            :contentReference[oaicite:22]&#123;index=22&#125;
+          </li>
+          <li><strong>minikube</strong> – lokální cluster pro vývoj.</li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Kubernetes objekty</h2>
+
+        <p>
+          Kubernetes pracuje s objekty jako Pods, Deployments, Services a
+          Volumes. Ty objekty mohu vytvářet imperativně nebo deklarativně přes
+          YAML. Service a Deployment jsou standardní objekty popsané v
+          oficiálních docs. :contentReference[oaicite:23]&#123;index=23&#125;
+        </p>
+
+        <h3>Deployment</h3>
+        <ul>
+          <li>většinou neposílám přímo Pod, ale definici Deploymentu</li>
+          <li>Deployment říká, co a kolikrát nasadit</li>
+          <li>mohu dělat rollout, rollback, změny konfigurace a škálování</li>
+        </ul>
+
+        <h3>Service</h3>
+        <ul>
+          <li>stabilní vstupní bod k Podům</li>
+          <li>řeší IP, load balancing a service discovery</li>
+        </ul>
+
+        <h3>Kubernetes volumes</h3>
+        <p>
+          Docker volumes a Kubernetes volumes nejsou totéž. V Kubernetes řeším
+          storage pro Pody a často i přístup napříč nody podle storage typu a
+          access modes.
+        </p>
+
+        <h4>Persistent volume access modes</h4>
+        <ul>
+          <li>
+            <strong>ReadWriteOnce (RWO)</strong> – čtení a zápis na jednom nodu
+          </li>
+          <li>
+            <strong>ReadOnlyMany (ROX)</strong> – jen čtení na více nodech
+          </li>
+          <li>
+            <strong>ReadWriteMany (RWX)</strong> – čtení a zápis na více nodech
+          </li>
+          <li>
+            <strong>ReadWriteOncePod (RWOP)</strong> – čtení a zápis pro jeden
+            Pod
+          </li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Instalace lokálně</h2>
+
+        <ul>
+          <li>kubectl</li>
+          <li>virtualizace / driver</li>
+          <li>minikube</li>
+        </ul>
+
+        <pre><code>minikube start --driver=hyperv</code></pre>
+        <pre><code>minikube status</code></pre>
+        <pre><code>minikube dashboard</code></pre>
+
+        <p>
+          Kubernetes Dashboard je webové UI pro přehled a správu clusteru.
+          :contentReference[oaicite:24]&#123;index=24&#125;
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Kubectl</h2>
+
+        <pre><code>kubectl get pods</code></pre>
+        <pre><code>kubectl get deployments</code></pre>
+        <pre><code>kubectl create deployment first-app --image=academind/kub-first-app</code></pre>
+
+        <pre><code>kubectl expose deployment first-app --type=LoadBalancer --port=8080</code></pre>
+        <p>
+          Tím vytvořím Service pro Deployment a vystavím aplikaci podle typu
+          služby. Service v Kubernetes definuje logickou sadu Podů a způsob
+          přístupu k nim. :contentReference[oaicite:25]&#123;index=25&#125;
+        </p>
+
+        <pre><code>kubectl scale deployment/first-app --replicas=3</code></pre>
+        <p>Naškáluje Deployment na 3 repliky.</p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Deklarativní přístup</h2>
+
+        <p>
+          Místo přímých příkazů je lepší používat YAML soubory a nasazovat je
+          deklarativně přes <code>kubectl apply</code>.
+        </p>
+
+        <pre><code>kubectl apply -f deployment.yaml</code></pre>
+
+        <h3>Deployment YAML</h3>
+        <pre><code>apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: second-app-deployment
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-app
+      tier: backend
+
+  template:
+    metadata:
+      labels:
+        app: second-app
+        tier: backend
+
+    spec:
+      containers:
+        - name: second-node
+          image: academind/kub-first-app:2</code></pre>
+
+        <h3>Service YAML</h3>
+        <pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: second-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer</code></pre>
+
+        <p>
+          Service v Kubernetes vybírá cílové Pody typicky přes label selector.
+          To je základní princip, jak Service ví, kam má provoz směrovat.
+          :contentReference[oaicite:26]&#123;index=26&#125;
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Hints</h2>
+
+        <ul>
+          <li>Docker = image + container + volumes + networking</li>
+          <li>Compose = více kontejnerů přes jeden YAML</li>
+          <li>Kubernetes = orchestrátor nad kontejnery</li>
+          <li>Pod není totéž co container</li>
+          <li>Service dává stabilní přístupový bod k Podům</li>
+          <li>
+            Deployment je běžný způsob, jak říct kolik Podů chci a jak mají
+            běžet
+          </li>
+          <li>
+            Pořadí instrukcí v Dockerfile hodně ovlivňuje cache a rychlost
+            buildů
+          </li>
+          <li>
+            Na dev a prod často používám jiný Dockerfile nebo jiný build flow
+          </li>
+        </ul>
+      </section>
+    </div>
   </div>
   <app-footer-bar></app-footer-bar>
 </div>
