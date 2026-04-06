@@ -1,0 +1,17 @@
+@import "../../../../../styles/variables.scss";
+
+.course-page {
+  padding: 4rem 0 2rem;
+}
+
+.course-page__back {
+  color: $color-tertiary;
+  text-decoration: none;
+  display: inline-flex;
+  margin-bottom: 1.2rem;
+}
+
+.course-page__title {
+  font-size: 1.7rem;
+  font-weight: 600;
+}

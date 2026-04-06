@@ -7,6 +7,9 @@ import { KnowledgeComponent } from './features/knowledge/knowledge.component';
 import { CourseAngularComponent } from './features/knowledge/Courses/course-angular/course-angular.component';
 import { CourseAzureComponent } from './features/knowledge/Courses/course-azure/course-azure.component';
 import { CourseBlazorComponent } from './features/knowledge/Courses/course-blazor/course-blazor.component';
+import { CourseMssqlComponent } from './features/knowledge/Courses/course-mssql/course-mssql.component';
+import { CoursePowerbiComponent } from './features/knowledge/Courses/course-powerbi/course-powerbi.component';
+import { CourseDockerComponent } from './features/knowledge/Courses/course-docker/course-docker.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +40,18 @@ export const routes: Routes = [
   {
     path: 'knowledge/course-blazor',
     component: CourseBlazorComponent,
+  },
+  {
+    path: 'knowledge/course-mssql',
+    component: CourseMssqlComponent,
+  },
+  {
+    path: 'knowledge/course-powerbi',
+    component: CoursePowerbiComponent,
+  },
+  {
+    path: 'knowledge/course-docker',
+    component: CourseDockerComponent,
   },
   {
     path: '**',

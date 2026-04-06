@@ -1,0 +1,965 @@
+<div class="container">
+  <div class="row">
+    <div class="course-page">
+      <a class="course-page__back" routerLink="/knowledge">Zpět</a>
+      <h1 class="course-page__title text-center">
+        Kompletní administrace Microsoft SQL Serveru
+      </h1>
+
+      <div class="course-page__content">
+        <section class="notes-section">
+          <h2>Zdroje</h2>
+
+          <ul>
+            <li>
+              <a
+                href="https://tinyurl.com/goc6345"
+                target="_blank"
+                rel="noopener noreferrer"
+                >https://tinyurl.com/goc6345</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://decodingdata.wordpress.com/2018/05/13/calculating-maximum-consumption-ratemcr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >https://decodingdata.wordpress.com/2018/05/13/calculating-maximum-consumption-ratemcr/</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/DropmanCz/SQL-Notebooks/blob/main/01%20Database%20Creation.ipynb"
+                target="_blank"
+                rel="noopener noreferrer"
+                >https://github.com/DropmanCz/SQL-Notebooks/blob/main/01%20Database%20Creation.ipynb</a
+              >
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Komponenty a služby SQL Serveru</h2>
+
+          <ul>
+            <li>
+              <strong>Replikace</strong> – automatické kopírování a
+              synchronizace dat z jedné databáze do druhé. Tady pozor, bývá to
+              citlivé a ne vždy spolehlivé.
+            </li>
+            <li>
+              <strong>Full-textové vyhledávání</strong> – indexační a
+              vyhledávací mechanismus pro texty, který jde mimo klasické
+              <code>LIKE '%text%'</code>. Instaluje se zvlášť.
+            </li>
+            <li>
+              <strong>PolyBase</strong> – umožňuje dotazovat se na externí data,
+              jako by to byly normální SQL tabulky, bez nutnosti je importovat
+              do databáze.
+            </li>
+            <li>
+              <strong>Parquet</strong> – sloupcový formát vhodný pro rychlou
+              analytiku nad velkými daty.
+            </li>
+            <li>
+              <strong>Machine Learning Services</strong> – umožňují spouštět R
+              nebo Python přímo uvnitř SQL Serveru.
+            </li>
+            <li>
+              <strong>SSIS – Integration Services</strong> – ETL nástroj pro
+              tahání dat mezi DB, soubory a systémy.
+            </li>
+            <li>
+              <strong>Master Data Services (MDS)</strong> – centrální číselníky
+              a „zdroj pravdy“, dnes už obsolete.
+            </li>
+            <li>
+              <strong>Data Quality Services (DQS)</strong> – čištění a
+              sjednocování dat, dnes také v podstatě mrtvé / obsolete.
+            </li>
+            <li>
+              <strong>SSAS – Analysis Services</strong> – analytický server nad
+              daty. Ne databáze, ale „mozková vrstva“ pro rychlé agregace.
+            </li>
+            <li>
+              <strong>SSRS – Reporting Services</strong> – server na generování
+              hotových reportů, PDF, tiskových výstupů a tabulek.
+            </li>
+          </ul>
+
+          <p>
+            Tip: některé komponenty má smysl nainstalovat a nechat vypnuté,
+            dokud nejsou potřeba.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Instance SQL Serveru</h2>
+
+          <ul>
+            <li>na jednom PC nebo VM může být více instancí SQL Serveru</li>
+            <li>server má default collation, databáze může mít jinou</li>
+            <li>nejlepší je držet collation pokud možno stejně</li>
+            <li>
+              SQL Server typicky využívá sudý počet procesorů rozumněji při
+              paralelismu
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Edice MSSQL Serveru</h2>
+
+          <ul>
+            <li>
+              <strong>Enterprise</strong> – nejlepší algoritmy, locking,
+              paralelismus, více funkcí
+            </li>
+            <li><strong>Standard</strong></li>
+            <li><strong>BI</strong> – dříve existovala, zanikla</li>
+            <li><strong>Web</strong> – speciální licenční scénáře</li>
+            <li>
+              <strong>Express</strong> – pokusy, učení, malé aplikace; omezené,
+              max 10 GB na databázi, žádný SQL Agent
+            </li>
+            <li>
+              <strong>Developer</strong> – v podstatě Enterprise bez produkčního
+              nasazení
+            </li>
+          </ul>
+
+          <p>
+            Jen Express a Developer běžně jdou na desktop OS, ostatní spíš na
+            server OS.
+          </p>
+
+          <h3>Nasazení v Azure</h3>
+          <ul>
+            <li>
+              <strong>Azure SQL Database</strong> – levné, jednoduché, ale ne
+              100% kompatibilní s on-prem
+            </li>
+            <li>
+              <strong>SQL Managed Instance</strong> – dražší, ale skoro jako
+              on-prem
+            </li>
+            <li><strong>VM</strong> – plná kontrola, dělám si co chci</li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Přehled architektury</h2>
+
+          <p>
+            SQL je deklarativní jazyk – říkám <strong>co</strong>, ale ne
+            <strong>jak</strong>.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Query Execution</strong> – SQL Server dostane dotaz,
+              parsuje ho, optimalizuje a vytvoří execution plan
+            </li>
+            <li>
+              <strong>Storage Engine</strong> – „ruce SQL Serveru“, vykonává
+              plán, řeší zamykání a transakce
+            </li>
+            <li>
+              <strong>SQL OS</strong> – malý interní OS, který komunikuje s
+              operačním systémem, řeší paměť, CPU, disk a třeba i deadlock
+              monitor
+            </li>
+          </ul>
+
+          <h3>In-Memory OLTP</h3>
+          <p>
+            Vybrané tabulky drží celé v RAM. Dotazy nad nimi běží bez klasických
+            locků a latchů. Na disk se zapisují přes log a checkpointy.
+          </p>
+
+          <ul>
+            <li>
+              týká se jen tabulek, které jsou explicitně
+              <code>MEMORY_OPTIMIZED</code>
+            </li>
+            <li>
+              hodí se pro hodně současných <code>INSERT</code> a
+              <code>UPDATE</code>
+            </li>
+            <li>pro situace s velkým paralelním přístupem na stejná data</li>
+            <li>
+              normální OLTP často stačí dobře cachované v buffer poolu, nemusí
+              být In-Memory
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>SSMS a konfigurace serveru</h2>
+
+          <p>
+            <strong>SSMS</strong> +
+            <strong>SQL Server Configuration Manager</strong>
+          </p>
+
+          <h3>Na serveru v context menu</h3>
+          <ul>
+            <li>
+              <strong>Activity Monitor</strong> – sledování zátěže, waits,
+              resource usage, paralelismu a dalších věcí
+            </li>
+          </ul>
+
+          <h3>Server properties</h3>
+          <ul>
+            <li><strong>General</strong> – verze, collation</li>
+            <li>
+              <strong>Memory</strong> – minimum a maximum memory pro SQL Server
+            </li>
+            <li><strong>Processors</strong> – procesory pro danou instanci</li>
+            <li><strong>Connections</strong> – radši zbytečně nesahat</li>
+            <li>
+              <strong>Database settings</strong> – cesty k DB, komprese backupu,
+              checksum
+            </li>
+            <li>
+              <strong>Advanced</strong> – nastavení paralelismu a další
+              low-level věci
+            </li>
+          </ul>
+
+          <h3>Memory</h3>
+          <ul>
+            <li>
+              <strong>Minimum</strong> – když SQL dosáhne minima, už pod něj
+              často neklesne
+            </li>
+            <li>
+              <strong>Maximum</strong> – nastavit rozumný strop, aby zbylo místo
+              pro OS a další procesy
+            </li>
+            <li>
+              tohle nastavení se týká hlavně <strong>Buffer Poolu</strong>
+            </li>
+            <li>
+              <strong>Index creation memory</strong> – nechat 0, tedy dynamic
+            </li>
+            <li>
+              <strong>Min memory per query</strong> – minimální paměť na dotaz;
+              někdy má smysl zvednout tam, kde běží jen velké dotazy
+            </li>
+          </ul>
+
+          <h3>Advanced – paralelismus</h3>
+          <ul>
+            <li>
+              <strong>Cost Threshold for Parallelism</strong> – „cena“, od které
+              se execution plan pustí paralelně
+            </li>
+            <li>
+              často dává smysl nastavit třeba 50 místo historického defaultu 5
+            </li>
+            <li>
+              <strong>Max Degree of Parallelism (MAXDOP)</strong> – kolik
+              procesorů smí paralelní plán použít
+            </li>
+          </ul>
+
+          <h3>Na DB v context menu → Properties</h3>
+          <ul>
+            <li>
+              <strong>Query Store</strong> – zapnout uchovávání dotazů a plánů
+            </li>
+            <li>
+              <strong>Options → Max DOP</strong> – omezení paralelismu na úrovni
+              DB
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Instalace SQL Serveru</h2>
+
+          <ul>
+            <li>mount ISO</li>
+            <li>SQL Installation Center</li>
+            <li>licence / eval / klíč</li>
+          </ul>
+
+          <h3>Server Configuration</h3>
+          <ul>
+            <li>
+              <strong>Service accounts</strong> – nastavit účty pro Engine a
+              Agent
+            </li>
+            <li>
+              <strong>Grant Perform Volume Maintenance Tasks</strong> – zapnout,
+              pokud nemusím řešit extra security; pomáhá při růstu souborů DB
+            </li>
+            <li>
+              <strong>Collation</strong> – dobře promyslet hned na začátku
+            </li>
+          </ul>
+
+          <h3>Collation</h3>
+          <ul>
+            <li>pro nové aplikace často <code>Czech_CI_AS</code></li>
+            <li>
+              pro staré aplikace někdy
+              <code>SQL_CZECH_CP1250_CI_AS</code> nebo jiné starší varianty
+            </li>
+            <li>
+              accent-sensitive znamená, že třeba <code>Ř</code> a
+              <code>R</code> není totéž
+            </li>
+          </ul>
+
+          <h3>Database Engine Configuration</h3>
+          <ul>
+            <li><strong>Mixed mode</strong> nebo Windows mode</li>
+            <li>přidat current user jako admina</li>
+            <li>
+              <strong>Data directories</strong> – rozumně rozdělit data, logy a
+              tempdb
+            </li>
+            <li>
+              <strong>TempDB</strong> – změnit defaultní umístění a počet
+              souborů
+            </li>
+            <li><strong>MAXDOP</strong> – nastavit při instalaci</li>
+            <li><strong>Memory</strong> – nastavit mantinely</li>
+            <li><strong>FILESTREAM</strong> – nezapínat, dokud není potřeba</li>
+          </ul>
+
+          <h3>TempDB</h3>
+          <ul>
+            <li>často se dává na vlastní rychlý disk</li>
+            <li>počet souborů typicky podle CPU, ale rozumně, ne přehnaně</li>
+            <li>rozumný initial size a autogrowth jsou důležité</li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Obecně</h2>
+
+          <ul>
+            <li>
+              počítat orientačně zhruba 7–8 GB RAM na procesor jako hrubý odhad
+            </li>
+            <li>když je Memory-Optimized OLTP, paměť klidně krát 2</li>
+            <li>odhadem přidat rezervu kolem 20 % velikosti dat</li>
+            <li>u Standard edice jsou limity na CPU a RAM</li>
+            <li>pozor na dynamickou alokaci zdrojů u VM</li>
+          </ul>
+
+          <h3>Disky</h3>
+          <p>Ideálně mít oddělené disky pro:</p>
+          <ul>
+            <li>Windows</li>
+            <li>TempDB</li>
+            <li>data DB</li>
+            <li>log DB</li>
+          </ul>
+
+          <p>
+            NTFS ideálně 64 KB allocation unit size pro data disky SQL Serveru.
+          </p>
+
+          <h3>Indexy a klíče</h3>
+          <ul>
+            <li>
+              <strong>Clustered index</strong> určuje fyzické uspořádání řádků v
+              tabulce
+            </li>
+            <li>clustered index může být jen jeden</li>
+            <li>nejčastěji bývá na PK</li>
+            <li>nejlepší bývá <code>int</code> jako PK</li>
+            <li>
+              <code>GUID</code> není ideální, protože je dlouhý a špatně se
+              porovnává i vkládá
+            </li>
+          </ul>
+
+          <h3>Hot Pages</h3>
+          <p>
+            Stránky, na které se hodně sahá, třeba kvůli insertům do clustered
+            PK. Při vysoké souběžnosti to může bolet.
+          </p>
+
+          <h3>Shrink</h3>
+          <ul>
+            <li>vrací nevyužité místo zpět OS</li>
+            <li><strong>neshrinkovat</strong> běžně MDF a NDF</li>
+            <li>nikdy automaticky</li>
+            <li>
+              dává smysl jen výjimečně, třeba po velkém růstu logu nebo rušení
+              souboru
+            </li>
+          </ul>
+
+          <h3>Filestream</h3>
+          <p>
+            Mohu ukládat <code>VARBINARY(MAX)</code> mimo MDF na disk a v
+            databázi mít jen odkaz. Hodí se na velké soubory.
+          </p>
+
+          <h3>Další poznámky</h3>
+          <ul>
+            <li>
+              MSSQL je spíš pesimistický přístup – zamykání měněných řádků
+            </li>
+            <li>databázi mohu vytvořit skriptem, attach nebo restore</li>
+            <li>
+              SQL Server umí číst soubory, ale nemám přesouvat DB ručně ve file
+              systemu bez správného postupu
+            </li>
+            <li>co nejmenší transakce, rollback je drahý</li>
+            <li>logy serveru jsou v Management → SQL Server Logs</li>
+            <li>
+              <strong>Linked Server</strong> – SQL Server se tváří, že má
+              připojený jiný server a může na něj posílat dotazy
+            </li>
+            <li>nevrstvit view na view na view – často velmi nevýkonné</li>
+            <li>
+              <strong>Query hint</strong> = příkaz optimalizátoru, jak má udělat
+              execution plan
+            </li>
+            <li>
+              <strong>fragmentace</strong> – do 5 % OK, 5–30 % reorganize, nad
+              30 % rebuild
+            </li>
+            <li>
+              <strong>indexované view</strong> – většinou nepoužívat, zpomalují
+              insert/update/delete do base tabulek
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>SQL CLR</h2>
+
+          <p><strong>SQL CLR</strong> = managed .NET code v SQL Serveru.</p>
+
+          <ul>
+            <li>mohu spouštět C# kód nasazený přímo na SQL Serveru</li>
+            <li>na serveru musí být povolené <code>clr_enabled</code></li>
+            <li>
+              vytvořím DLL a přes <code>CREATE ASSEMBLY</code> ji nahraji do SQL
+              Serveru
+            </li>
+            <li>
+              pak přes <code>CREATE PROCEDURE</code> nebo funkci napojím .NET
+              metodu
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>SQL Server Audit a diagnostika</h2>
+
+          <ul>
+            <li>audit loguje kdo, kdy a co udělal</li>
+            <li>v SSMS: Security → Audits → New Audit</li>
+            <li>
+              nad tím se dělá Audit Specification, buď serverová, nebo
+              databázová
+            </li>
+          </ul>
+
+          <p>
+            Když je audit špatně nastavený a SQL kvůli tomu padá, může být
+            potřeba nouzové spuštění v single-user módu a oprava konfigurace.
+          </p>
+
+          <h3>Extended Events</h3>
+          <p>
+            Management → Extended Events. Zachytí diagnostické události a hodí
+            se při pádech nebo problémech.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Databáze a soubory</h2>
+
+          <p>Databáze používá stránky o velikosti <strong>8 KB</strong>.</p>
+
+          <h3>Souborová struktura</h3>
+          <ul>
+            <li><strong>.mdf</strong> – primární datový soubor, jeden na DB</li>
+            <li><strong>.ndf</strong> – sekundární datové soubory</li>
+            <li>
+              <strong>.ldf</strong> – transakční log, ideálně na jiném disku
+            </li>
+          </ul>
+
+          <p>
+            <strong>FG = Filegroup</strong>. Určuje, do jaké skupiny souborů se
+            ukládají data. U většiny DB se to moc neřeší.
+          </p>
+
+          <h3>Systémové DB</h3>
+          <ul>
+            <li>
+              <strong>master</strong> – seznam databází a konfigurace serveru;
+              bez ní SQL Server neběží
+            </li>
+            <li>
+              <strong>msdb</strong> – SQL joby, alerty, mail a další „paměť“
+              serveru
+            </li>
+            <li><strong>model</strong> – šablona pro nové databáze</li>
+            <li>
+              <strong>tempdb</strong> – dočasná data, tabulky, joiny, pracovní
+              prostor SQL Serveru
+            </li>
+            <li><strong>ResourceDB</strong> – interní, skrytá systémová DB</li>
+          </ul>
+
+          <h3>Přesun DB</h3>
+          <p>
+            <code>detach</code> databáze, přenesení souborů, pak
+            <code>attach</code>.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>DB Properties</h2>
+
+          <ul>
+            <li><strong>Auto Close</strong> – false</li>
+            <li><strong>Auto Shrink</strong> – nezapínat</li>
+            <li><strong>Auto Update Statistics</strong> – true</li>
+            <li><strong>Cursor</strong> – běžně nenastavovat</li>
+            <li>
+              <strong>Legacy Cardinality Estimation</strong> – někdy pomůže u
+              starých DB před 2014
+            </li>
+            <li><strong>DOP</strong> – dá se přepsat na úrovni DB</li>
+            <li>
+              <strong>Parameter Sniffing</strong> – první kompilace plánu
+              použije konkrétní parametry a plán pak může být špatný pro jiné
+              hodnoty
+            </li>
+            <li>
+              <strong>Query Optimizer Fixes</strong> – jestli má SQL Server
+              používat novější opravy optimalizátoru, nebo se chovat postaru
+              kvůli kompatibilitě
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Zálohy DB</h2>
+
+          <h3>Základní pojmy</h3>
+          <ul>
+            <li><strong>RPO</strong> – o kolik dat si mohu dovolit přijít</li>
+            <li><strong>RTO</strong> – jak dlouho bude trvat obnova</li>
+            <li>zálohovat i systémové DB kromě tempdb</li>
+            <li>
+              nekombinovat nativní SQL backup a backup třetích stran nad stejnou
+              DB bez rozmyslu
+            </li>
+            <li>komprese backupu je většinou super</li>
+          </ul>
+
+          <h3>Typy backupu</h3>
+          <ul>
+            <li><strong>Full</strong> – plná záloha DB</li>
+            <li>
+              <strong>Differential</strong> – vše změněné od posledního full
+              backupu
+            </li>
+            <li><strong>Log</strong> – záloha transakčního logu</li>
+          </ul>
+
+          <h3>Recovery model</h3>
+          <ul>
+            <li>
+              <strong>FULL</strong> – log zálohuji sám a mohu obnovovat přesněji
+            </li>
+            <li>
+              <strong>SIMPLE</strong> – SQL Server si log průběžně čistí sám
+            </li>
+            <li>
+              <strong>BULK_LOGGED</strong> – výjimečný režim pro speciální
+              operace; nejde obnovit na přesný čas
+            </li>
+          </ul>
+
+          <h3>Další pojmy</h3>
+          <ul>
+            <li><strong>Backup Set</strong> – jedna záloha</li>
+            <li>
+              <strong>Media Set</strong> – jedno nebo více backup setů na médiu
+            </li>
+            <li>
+              <strong>Tail Log Backup</strong> – záloha té části logu, která
+              ještě nikdy nebyla zazálohovaná
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Obnova DB</h2>
+
+          <pre><code>RESTORE DATABASE MyDb
+FROM DISK = 'E:\SqlBackup\mydb_full.bak'
+WITH
+  REPLACE,
+  NORECOVERY,
+  MOVE 'MyDb' TO 'E:\SqlData\MyDb.mdf',
+  MOVE 'MyDb_log' TO 'L:\SqlLog\MyDb_log.ldf';
+
+RESTORE LOG MyDb
+FROM DISK = 'E:\SqlBackup\mydb_log.trn'
+WITH NORECOVERY;
+
+RESTORE DATABASE MyDb WITH RECOVERY;</code></pre>
+
+          <ul>
+            <li><strong>REPLACE</strong> – nahradí existující DB</li>
+            <li>
+              <strong>NORECOVERY</strong> – DB ještě nebude dostupná, čeká na
+              další zálohy
+            </li>
+            <li><strong>RECOVERY</strong> – až tady se DB opravdu otevře</li>
+          </ul>
+
+          <h3>Když nejde master</h3>
+          <p>
+            Nejdřív se pokusit SQL Server nastartovat nouzově a obnovit master z
+            backupu. Rebuild systémových DB je až poslední záchrana.
+          </p>
+
+          <pre><code>sqlservr.exe -s DEV -f -m</code></pre>
+          <p>
+            Nouzové spuštění instance v minimální konfiguraci a single-user
+            režimu.
+          </p>
+
+          <pre><code>setup.exe /ACTION=RebuildDatabase</code></pre>
+          <p>
+            Poslední záchrana. Znovu vytvoří systémové DB a konfiguraci je pak
+            potřeba obnovit ručně.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Autentizace a oprávnění</h2>
+
+          <p>Ve složce Security v SSMS řeším:</p>
+          <ul>
+            <li>
+              <strong>Securables</strong> – objekty, na které se přistupuje
+            </li>
+            <li><strong>Principals</strong> – identity, které přistupují</li>
+            <li><strong>Permissions</strong> – oprávnění, co mohou dělat</li>
+          </ul>
+
+          <ul>
+            <li><strong>login</strong> – přístup na úroveň SQL Serveru</li>
+            <li><strong>user</strong> – přístup uvnitř konkrétní databáze</li>
+          </ul>
+
+          <p>Authentication mód může být Windows only nebo SQL + Windows.</p>
+
+          <pre><code>GRANT SELECT, UPDATE, INSERT, DELETE
+ON OBJECT::Sales.SalesOrderDetail
+TO eva;</code></pre>
+
+          <h3>Poznámky</h3>
+          <ul>
+            <li>
+              <strong>Column-level permissions</strong> – raději nepoužívat,
+              bývá to peklo na správu
+            </li>
+            <li>lepší je použít view a vystavit jen potřebné sloupce</li>
+            <li>
+              <strong>Row-Level Security</strong> – od SQL Server 2016
+              automaticky filtruje řádky podle identity uživatele
+            </li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Automatizace a údržba</h2>
+
+          <h3>Database Mail</h3>
+          <p>
+            Postavené nad .NET SMTP klientem. Nastavení je v
+            <code>msdb</code>.
+          </p>
+
+          <p>SSMS → Management → Database Mail → nastavit profil a SMTP.</p>
+
+          <h3>Maintenance Plan</h3>
+          <p>Spíš pro menší servery, jinak raději joby nebo Ola Hallengren.</p>
+
+          <ul>
+            <li>
+              <strong>Check DB Integrity</strong> – spustí
+              <code>DBCC CHECKDB</code>
+            </li>
+            <li><strong>Shrink</strong> – ne</li>
+            <li>
+              <strong>Reorganize Index</strong> – jemná defragmentace, méně
+              náročná
+            </li>
+            <li>
+              <strong>Rebuild Index</strong> – přestaví index úplně, náročnější
+            </li>
+            <li><strong>Update Statistics</strong> – přepočítá statistiky</li>
+            <li>
+              <strong>Clean Up History</strong> – čistí historii uvnitř SQL
+            </li>
+            <li><strong>Execute SQL Server Job</strong> – spouštění jobů</li>
+            <li>
+              <strong>Maintenance Cleanup Task</strong> – maže fyzické soubory
+              na disku podle stáří
+            </li>
+          </ul>
+
+          <h3>Ola Hallengren</h3>
+          <p>
+            Nejpoužívanější open-source maintenance solution pro SQL Server.
+            Takové „velké kladivo“ na údržbu.
+          </p>
+
+          <h3>SQL Server Agent</h3>
+          <p>V SSMS → SQL Server Agent → Settings.</p>
+
+          <ul>
+            <li><strong>General</strong> – běžně nic neměnit</li>
+            <li><strong>Advanced</strong> – historie a low-level nastavení</li>
+            <li><strong>History</strong> – logování jobů a retence</li>
+          </ul>
+
+          <pre><code>SELECT * FROM msdb.dbo.sysmail_allitems;</code></pre>
+          <p>Odeslané e-maily.</p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Scripty a diagnostika</h2>
+
+          <h3>Změna nastavení serveru</h3>
+          <pre><code>EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;</code></pre>
+
+          <h3>Výkonové čítače</h3>
+          <pre><code>SELECT *
+FROM sys.dm_os_performance_counters;</code></pre>
+
+          <h3>Workers</h3>
+          <pre><code>SELECT *
+FROM sys.dm_os_workers;</code></pre>
+
+          <h3>Schedulers</h3>
+          <pre><code>SELECT *
+FROM sys.dm_os_schedulers;</code></pre>
+
+          <h3>Fragmentace indexů</h3>
+          <pre><code>SELECT *
+FROM sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, NULL);</code></pre>
+
+          <h3>Soubory databáze</h3>
+          <pre><code>SELECT *
+FROM sys.database_files;</code></pre>
+
+          <h3>Backup DB</h3>
+          <pre><code>BACKUP DATABASE AdventureWorks
+TO DISK = &#64;path
+WITH
+  INIT,
+  CHECKSUM,
+  COMPRESSION = NO_COMPRESSION;</code></pre>
+
+          <h3>Ověření backupu</h3>
+          <pre><code>RESTORE VERIFYONLY
+FROM DISK = 'E:\SqlBackup\aw_20251217.bak'
+WITH CHECKSUM;</code></pre>
+
+          <h3>Info o záloze</h3>
+          <pre><code>RESTORE HEADERONLY
+FROM DISK = 'E:\SqlBackup\aw_20251217.bak';</code></pre>
+
+          <h3>Metadata o souborech v backupu</h3>
+          <pre><code>RESTORE FILELISTONLY
+FROM DISK = 'E:\SqlBackup\aw_20251217.bak';</code></pre>
+
+          <h3>Moje identity a DB přístup</h3>
+          <pre><code>SELECT * FROM sys.login_token;
+SELECT * FROM sys.user_token;
+SELECT * FROM sys.databases;</code></pre>
+
+          <h3>Rebuild indexu</h3>
+          <pre><code>ALTER INDEX IX_Name_ProductID
+ON Production.WorkOrderRouting
+REBUILD;</code></pre>
+        </section>
+
+        <section class="notes-section">
+          <h2>SQL funkce a konstrukce</h2>
+
+          <h3>CTE</h3>
+          <p><strong>Common Table Expression</strong> – pojmenovaný select.</p>
+
+          <pre><code>WITH Name AS (
+  SELECT *
+  FROM dbo.TableName
+)
+SELECT *
+FROM Name;</code></pre>
+
+          <h3>Window funkce</h3>
+          <p>
+            Pro každý řádek spočítám hodnotu z okolních řádků podle definice
+            okna.
+          </p>
+
+          <pre><code>SUM(Value) OVER (
+  ORDER BY Id
+  ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+)</code></pre>
+
+          <h3>APPLY</h3>
+          <ul>
+            <li>
+              <strong>CROSS APPLY</strong> – podobné jako INNER JOIN, pravá
+              strana se vyhodnocuje pro každý řádek zleva
+            </li>
+            <li><strong>OUTER APPLY</strong> – podobné jako LEFT JOIN</li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Indexy</h2>
+
+          <ul>
+            <li><strong>Unique</strong> – hodnoty musí být unikátní</li>
+            <li>
+              <strong>Clustered</strong> – jeden na tabulku, fyzické seřazení
+              dat, ideálně úzký, statický, rostoucí klíč
+            </li>
+            <li>
+              <strong>Nonclustered</strong> – může jich být víc, často na časté
+              dotazy
+            </li>
+            <li><strong>Composite</strong> – index přes více sloupců</li>
+            <li>
+              <strong>INCLUDE</strong> – přidá další sloupce do nonclustered
+              indexu, aby nebyl potřeba key lookup
+            </li>
+          </ul>
+
+          <pre><code>CREATE INDEX IX_Users_Email_Name
+ON dbo.Users(Email, Name)
+INCLUDE (CreatedAt, Status);</code></pre>
+
+          <p>Pořadí sloupců v composite indexu je důležité.</p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Vyhledání textu ve všech tabulkách</h2>
+
+          <pre><code>DECLARE &#64;hledana NVARCHAR(100) = 'Red';
+DECLARE &#64;sql NVARCHAR(MAX);
+
+DECLARE crs CURSOR FAST_FORWARD FOR
+WITH columns_metadata AS
+(
+    SELECT
+        CONCAT(OBJECT_SCHEMA_NAME(t.object_id), '.', t.name) AS full_table_name,
+        STRING_AGG(
+            CONCAT('[', c.name, '] LIKE ''%', &#64;hledana, '%'''),
+            ' OR '
+        ) AS predicate
+    FROM sys.tables t
+    JOIN sys.columns c ON t.object_id = c.object_id
+    WHERE c.system_type_id IN (231, 35, 99, 167, 175, 239)
+    GROUP BY CONCAT(OBJECT_SCHEMA_NAME(t.object_id), '.', t.name)
+)
+SELECT
+    'IF EXISTS(SELECT * FROM ' + full_table_name +
+    ' WHERE ' + predicate +
+    ') PRINT ''' + full_table_name + ''''
+FROM columns_metadata;
+
+OPEN crs;
+FETCH NEXT FROM crs INTO &#64;sql;
+
+WHILE &#64;&#64;FETCH_STATUS = 0
+BEGIN
+    EXEC(&#64;sql);
+    FETCH NEXT FROM crs INTO &#64;sql;
+END
+
+CLOSE crs;
+DEALLOCATE crs;</code></pre>
+        </section>
+
+        <section class="notes-section">
+          <h2>Detailnější skript na fragmentaci</h2>
+
+          <pre><code>SELECT
+    o.name AS TableName,
+    i.name AS IndexName,
+    ips.index_type_desc AS IndexType,
+    ips.page_count AS PageCount,
+    ROUND(ips.avg_fragmentation_in_percent, 2) AS LogicalFragPercent,
+    ROUND(100 - ips.avg_page_space_used_in_percent, 2) AS InternalFragPercent,
+    CAST(
+        ROUND(
+            ips.page_count * (ips.avg_page_space_used_in_percent / 100.0),
+            0
+        ) AS int
+    ) AS EstimatedPageCountAfterRebuild
+FROM sys.dm_db_index_physical_stats
+(
+    DB_ID(),
+    NULL,
+    NULL,
+    NULL,
+    'DETAILED'
+) ips
+JOIN sys.objects o
+    ON ips.object_id = o.object_id
+JOIN sys.indexes i
+    ON ips.object_id = i.object_id
+   AND ips.index_id = i.index_id
+WHERE
+    o.type = 'U'
+    AND ips.page_count &gt; 1000
+ORDER BY InternalFragPercent DESC;</code></pre>
+        </section>
+
+        <section class="notes-section">
+          <h2>Prod checklist</h2>
+
+          <ul>
+            <li>počet jader a jejich rozdělení</li>
+            <li>MAXDOP a cost threshold</li>
+            <li>memory mantinely</li>
+            <li>filegroups a rozdělení disků</li>
+            <li>fragmentace</li>
+            <li>recovery model a LDF</li>
+            <li>joby, maintenance a maily</li>
+          </ul>
+        </section>
+
+        <section class="notes-section">
+          <h2>Hints</h2>
+
+          <ul>
+            <li>co jde, dělat skriptem a ne jen klikáním</li>
+            <li>zálohy pravidelně testovat restorem</li>
+            <li>tempdb a log nepodcenit</li>
+            <li>nepoužívat shrink jako běžnou údržbu</li>
+            <li>nejdřív měřit, až pak optimalizovat</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+  <app-footer-bar></app-footer-bar>
+</div>

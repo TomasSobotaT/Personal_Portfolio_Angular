@@ -1,0 +1,191 @@
+<div class="container">
+  <div class="row">
+    <div class="course-page">
+      <a class="course-page__back" routerLink="/knowledge">Zpět</a>
+      <h1 class="course-page__title text-center mx-2">Power BI</h1>
+
+      <div class="course-page__content">
+        <section class="notes-section">
+          <h2>Základ</h2>
+
+          <ul>
+            <li><strong>Power BI Desktop</strong> – IDE pro lokální vývoj.</li>
+            <li><strong>Power BI Service</strong> – cloudová verze.</li>
+          </ul>
+
+          <p>
+            <strong>DirectQuery</strong> není jen pro SQL zdroje. Používá se
+            tehdy, když nechci data importovat, ale dotazovat zdroj za běhu
+            reportu.
+          </p>
+
+          <p>
+            <strong>Power Query</strong> je nástroj na extrakci, transformaci a
+            nahrání dat, tedy ETL. V Power Query se používá jazyk
+            <strong>M</strong> pro transformační logiku.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>DAX</h2>
+
+          <p><strong>DAX</strong> = logika nad datovým modelem.</p>
+
+          <p>Slouží k tvorbě vlastních výpočtů v Power BI.</p>
+
+          <h3>Míra / Measure</h3>
+          <p>Míra je výpočet v jazyce DAX.</p>
+
+          <h3>Řádkový kontext / filtrační kontext</h3>
+          <p>
+            Při práci s jazykem DAX je důležité pochopit pojem kontext výpočtu,
+            který určuje, v jakém prostředí se daný výpočet vyhodnocuje.
+          </p>
+
+          <p>
+            Kontext má zásadní vliv na to, jak DAX pracuje s daty a jaký
+            výsledek vrátí.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>AI funkce a prediktivní analýzy</h2>
+
+          <ul>
+            <li>analýza dat</li>
+            <li>predikce budoucího vývoje</li>
+            <li>odpovědi na otázky v běžném jazyce</li>
+            <li>generování doporučení</li>
+          </ul>
+
+          <h3>Q&amp;A vizualizace</h3>
+          <p>Dotazy v přirozeném jazyce.</p>
+
+          <ul>
+            <li>Add Q&amp;A Visualization</li>
+            <li>funguje dobře, když mám dobře pojmenované sloupce a model</li>
+            <li>
+              napíšu dotaz a Power BI se pokusí vytvořit odpovídající
+              vizualizaci
+            </li>
+            <li>když neví, ukáže chybu nebo návrhy</li>
+            <li>ozubeným kolečkem lze chování upravit</li>
+          </ul>
+
+          <h3>Doporučení a automatizované přehledy</h3>
+          <p>Pomáhají zjistit, co nejvíce ovlivňuje daný ukazatel.</p>
+
+          <ul>
+            <li>klik pravým tlačítkem na bod v grafu</li>
+            <li>Analyzovat</li>
+            <li>Vysvětlete toto zvýšení</li>
+          </ul>
+
+          <h3>Prediktivní analýzy</h3>
+          <p>
+            Funkce prognóza umožňuje předpovídat budoucí vývoj dat na základě
+            dosavadních hodnot.
+          </p>
+
+          <p>Typicky ve vizualizaci zapnu analýzu a prognózu.</p>
+
+          <h3>AI funkce v Power Query</h3>
+          <ul>
+            <li>odhad nálady v recenzích</li>
+            <li>třídění textu</li>
+            <li>hledání klíčových slov</li>
+          </ul>
+
+          <p>
+            Tyto funkce byly navázané na Azure Cognitive Services / AI
+            capabilities a záleží na licenci a prostředí.
+          </p>
+
+          <h3>Pokročilé analýzy</h3>
+          <p>Mohu vložit script v Pythonu nebo R.</p>
+
+          <h3>Copilot</h3>
+          <p>
+            Vedle klasického Q&amp;A dnes v Power BI hodně vstupuje i Copilot,
+            který umí pomáhat s analýzou, tvorbou DAXu a prací nad modelem.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Power Query Editor</h2>
+
+          <ul>
+            <li>join na sloupce podle společného ID</li>
+            <li>odfiltrování dat přes šipku na sloupci</li>
+            <li>přejmenování sloupců</li>
+            <li>úprava datových typů přes pravé tlačítko na názvu sloupce</li>
+            <li>odstranění duplicit – Odebrat řádky → Odebrat duplicity</li>
+            <li>seřazení dat</li>
+            <li>seskupení dat – Transform → Group By</li>
+          </ul>
+
+          <p>
+            Když chci seskupovat a zároveň si nechat původní hodnoty, často si
+            předtím sloupec nebo tabulku duplikuji.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Menu</h2>
+
+          <ul>
+            <li><strong>Recent sources</strong> / zdroje dat</li>
+            <li>
+              <strong>Transform data</strong> – otevře ETL vrstvu v Power Query
+              Editoru
+            </li>
+          </ul>
+
+          <p>
+            V horním menu Power Query je možnost
+            <strong>Use First Row as Headers</strong>, když chci první řádek
+            použít jako hlavičku.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Poznámky k modelu</h2>
+
+          <p>Když chci, aby AI a Q&amp;A fungovaly dobře, musím mít:</p>
+
+          <ul>
+            <li>dobře pojmenované sloupce</li>
+            <li>dobře pojmenované tabulky</li>
+            <li>rozumné vztahy mezi tabulkami</li>
+            <li>čistý datový model</li>
+          </ul>
+
+          <p>
+            Jinak se Power BI nebo Copilot hůř orientuje a výstupy jsou méně
+            přesné.
+          </p>
+        </section>
+
+        <section class="notes-section">
+          <h2>Hints</h2>
+
+          <ul>
+            <li>Power Query = ETL nad daty</li>
+            <li>DAX = výpočty nad datovým modelem</li>
+            <li>Measure je výpočet, ne fyzický sloupec v datech</li>
+            <li>Nejdřív si udělat čistý model, až pak psát složitější DAX</li>
+            <li>
+              AI funkce fungují líp, když jsou dobře pojmenované sloupce a
+              tabulky
+            </li>
+            <li>
+              DirectQuery je dobrý, když nechci import, ale bývá citlivý na
+              výkon zdroje
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <app-footer-bar></app-footer-bar>
+  </div>
+</div>
