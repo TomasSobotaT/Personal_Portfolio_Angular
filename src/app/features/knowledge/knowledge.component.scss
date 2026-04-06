@@ -1,0 +1,37 @@
+@import "../../../styles/variables.scss";
+
+.knowledge {
+  padding: 3rem 0 2rem;
+}
+
+.knowledge__title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.knowledge-card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+}
+
+.knowledge-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.knowledge-list li {
+  margin-bottom: 0.6rem;
+}
+
+.knowledge-list a {
+  color: $color-secondary;
+  text-decoration: none;
+}
+
+.knowledge-list a:hover {
+  color: $color-tertiary;
+}
