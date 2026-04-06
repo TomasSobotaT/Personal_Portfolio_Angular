@@ -1,9 +1,826 @@
 <div class="container">
   <div class="row">
-    <section class="course-page">
+    <div class="course-page">
       <a class="course-page__back" routerLink="/knowledge">Zpět</a>
-      <h1 class="course-page__title">Microsoft Azure - The Complete Guide</h1>
-    </section>
+      <h1 class="course-page__title text-center">
+        Microsoft Azure - The Complete Guide
+      </h1>
+    </div>
+    <div class="course-page__content">
+      <section class="notes-section">
+        <h2>Co je na cloudu dobré</h2>
+
+        <p>
+          <a
+            href="https://azurecharts.com/overview"
+            target="_blank"
+            rel="noopener noreferrer"
+            >https://azurecharts.com/overview</a
+          >
+        </p>
+
+        <ul>
+          <li>
+            <strong>Škálovatelnost podle potřeby</strong> – okamžité navýšení
+            nebo snížení výkonu podle aktuální zátěže, například počet serverů
+            nebo velikost databází.
+          </li>
+          <li>
+            <strong>Platba za skutečné využití (pay-as-you-go)</strong> –
+            neplatíš za nevyužitý hardware, účtují se jen reálně spotřebované
+            zdroje.
+          </li>
+          <li>
+            <strong
+              >Minimální nebo nulové náklady na údržbu infrastruktury</strong
+            >
+            – správu fyzických serverů, chlazení, zálohování a bezpečnost
+            datového centra řeší poskytovatel.
+          </li>
+          <li>
+            <strong>Rychlé uvedení do provozu</strong> – nasazení prostředí nebo
+            nové aplikace trvá minuty, ne týdny.
+          </li>
+          <li>
+            <strong>Vysoká dostupnost a spolehlivost</strong> – datacentra po
+            celém světě, SLA s garantovanou dostupností, typicky 99,9 % a výše.
+          </li>
+          <li>
+            <strong>Bezpečnost a compliance</strong> – certifikace typu ISO,
+            GDPR, HIPAA, šifrování, identity management.
+          </li>
+          <li>
+            <strong>Flexibilní modely služeb</strong> – podle toho, kolik chci
+            spravovat sám a kolik nechám na poskytovateli.
+          </li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>On-premise vs Cloud</h2>
+
+        <p><strong>On-premise</strong> = CapEx, tedy kapitálové náklady.</p>
+        <p><strong>Cloud</strong> = OpEx, tedy operativní náklady.</p>
+
+        <h3>Dělení podle toho, co spravuje poskytovatel a co já</h3>
+        <ul>
+          <li>
+            <strong>IaaS – Infrastructure as a Service</strong> – dostanu
+            infrastrukturu a všechno ostatní si instaluji a spravuji sám.
+          </li>
+          <li>
+            <strong>PaaS – Platform as a Service</strong> – dostanu kompletní
+            platformu pro běh aplikací.
+          </li>
+          <li>
+            <strong>SaaS – Software as a Service</strong> – například Office,
+            GitHub a další hotové služby.
+          </li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Regiony a zóny</h2>
+
+        <ul>
+          <li>
+            <strong>Region</strong> – geografická oblast, kde má Microsoft svá
+            datacentra.
+          </li>
+          <li>
+            <strong>Zone</strong> – každá zóna má vlastní datacentrum s
+            nezávislým napájením, chlazením a sítí.
+          </li>
+          <li>
+            <strong>Paired Regions</strong> – regiony, které automaticky
+            replikují data do partnerského regionu. V případě katastrofy může
+            partnerský region nahradit původní.
+          </li>
+        </ul>
+
+        <h3>Jak vybrat region</h3>
+        <ul>
+          <li>podle lokace cílového publika</li>
+          <li>
+            podle služeb, které jsou v něm dostupné, protože v každém regionu
+            nejsou všechny služby
+          </li>
+          <li>podle ceny, protože každý region může mít jiné ceny</li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Resource Group</h2>
+
+        <p>
+          <strong>Resource Group (RG)</strong> – skupina prostředků v
+          subscription.
+        </p>
+
+        <ul>
+          <li>může být vytvořená přes klikání nebo přes command line</li>
+          <li>v jedné subscription může být více resource groups</li>
+          <li>resource group je zdarma</li>
+          <li>typicky rozdělení například na dev / test / prod</li>
+        </ul>
+
+        <p>Pro každý resource řeším:</p>
+        <ul>
+          <li>subscription</li>
+          <li>resource group</li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Storage, SLA a náklady</h2>
+
+        <p>
+          <strong>Storage Account</strong> – pro ukládání všeho v Azure. Zálohy
+          databází, disky VM, diagnostika a další věci. Je to levné úložiště.
+        </p>
+
+        <p>
+          <strong>SLA = Service Level Agreement</strong> – kolik času má být
+          služba dostupná.
+        </p>
+        <p>
+          <a href="https://uptime.is/" target="_blank" rel="noopener noreferrer"
+            >https://uptime.is/</a
+          >
+        </p>
+
+        <h3>Náklady</h3>
+        <ul>
+          <li>per resource</li>
+          <li>per usage</li>
+          <li>
+            per reservation time – rezervace může dát slevu klidně 50 % a víc
+          </li>
+        </ul>
+
+        <p>
+          <a
+            href="https://azure.microsoft.com/en-us/pricing/calculator/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >https://azure.microsoft.com/en-us/pricing/calculator/</a
+          >
+        </p>
+
+        <p>
+          <strong>Cost Management: Budgets</strong> – rozpočty a hlídání
+          nákladů.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Azure Compute</h2>
+
+        <p>Azure Compute = hostování aplikací.</p>
+
+        <pre><code>Virtual machines
+OS
+Hypervisor
+Guest OS
+Our software</code></pre>
+      </section>
+
+      <section class="notes-section">
+        <h2>Virtual Machines</h2>
+
+        <p>Po vytvoření VM se na Windows připojím přes Remote Desktop.</p>
+
+        <h3>Skutečné náklady u VM</h3>
+        <ul>
+          <li>VM samotné</li>
+          <li>disk</li>
+          <li>public IP</li>
+          <li>storage – bitová kopie systému a všeho kolem</li>
+        </ul>
+
+        <h3>Redukce nákladů</h3>
+        <ul>
+          <li>
+            <strong>autovypnutí</strong> – vhodné hlavně pro testovací prostředí
+          </li>
+          <li>
+            <strong>reserved instances</strong> – vhodné spíš pro produkci
+          </li>
+          <li>
+            <strong>spot instances</strong> – podle poptávky může Microsoft
+            zastavit nebo smazat náš resource; vhodné pro věci, které se mohou
+            přerušit a pokračovat později
+          </li>
+          <li>
+            <strong>disk optimalizace</strong> – například Premium SSD je dražší
+            než běžné SSD varianty
+          </li>
+        </ul>
+
+        <h3>ARM Template</h3>
+        <p>
+          <strong>ARM Template</strong> – declarative way, tedy popis výsledného
+          stavu. Oproti imperative přístupu typu PowerShell skriptů. Jsou to
+          JSONy s nastavením.
+        </p>
+        <p>
+          Nasazení třeba přes Cloud Shell – uploadnu
+          <code>parameters.json</code> a <code>template.json</code>.
+        </p>
+
+        <h3>VM Scale Set</h3>
+        <p>VM se přidávají automaticky podle zátěže z původního image.</p>
+
+        <ul>
+          <li><strong>manual</strong> – ručně přidám počet instancí</li>
+          <li>
+            <strong>custom</strong> – přidám pravidla, minimum a maximum
+            instancí
+          </li>
+        </ul>
+
+        <p>
+          <strong>Azure Instance Metadata Service</strong> – API z VM, díky
+          kterému se mohu dotazovat na Azure metadata.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Nasazení aplikace na VM</h2>
+
+        <ul>
+          <li>připojit se na VM</li>
+          <li>Server Manager</li>
+          <li>Add Roles and Features – přidat Web Server feature</li>
+          <li>stáhnout .NET 8 Hosting Bundle</li>
+          <li>zkopírovat na VM publish soubory</li>
+          <li>v IIS udělat Add Site, například port 8080</li>
+          <li>browse app</li>
+        </ul>
+
+        <p>Z venku se připojím přes <strong>static IP + port</strong>.</p>
+        <p>Zkontrolovat firewall incoming connections.</p>
+        <p>
+          Defaultně bývá vnější připojení zakázané, běžně je otevřené jen RDP.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>App Services</h2>
+
+        <p>
+          U App Services nemám přístup k VM. Jen částečně přes konzoli nebo
+          editor online.
+        </p>
+        <p>Škálování může být ruční nebo přes ruleset.</p>
+
+        <ul>
+          <li>je to jen na nasazení aplikace nebo Docker image</li>
+          <li>má jedinečný název</li>
+          <li>řeší se runtime stack</li>
+        </ul>
+
+        <h3>Sloty</h3>
+        <p>Sloty jsou instance aplikace, aby šlo přenasazovat bez výpadku.</p>
+
+        <h3>Deployment</h3>
+        <ul>
+          <li><strong>basic</strong> – kliknutím nasadím všechny instance</li>
+          <li>
+            <strong>rolling</strong> – postupně; další instance se nasadí až po
+            úspěchu předchozí
+          </li>
+          <li>
+            <strong>slot po slotu</strong> – a můžu přepínat procento zatížení
+          </li>
+          <li><strong>musím podporovat dvě verze současně</strong></li>
+          <li>
+            <strong>blue-green</strong> – nasadím nové instance pro testery a
+            pak přepnu vše
+          </li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>AKS, ACR, ACI</h2>
+
+        <p><strong>AKS = Azure Kubernetes Service</strong></p>
+
+        <ul>
+          <li>
+            <strong>Vertical scaling</strong> – změna výkonu instance, tedy CPU
+            nebo RAM
+          </li>
+          <li>
+            <strong>Horizontal scaling</strong> – přidání nových instancí
+            kontejneru podle zátěže
+          </li>
+        </ul>
+
+        <ul>
+          <li>
+            <strong>Azure ACR = Azure Container Registry</strong> – úložiště pro
+            kontejnery. Neumí image spustit, jen ho uchovává a poskytuje.
+          </li>
+          <li><strong>ACI</strong> – jednoduchá správa jednoho kontejneru.</li>
+          <li><strong>AKS</strong> – Kubernetes správa pro více kontejnerů.</li>
+        </ul>
+
+        <h3>V Azure</h3>
+        <ul>
+          <li>Create → Container Registries</li>
+          <li>RG → Settings → Access Keys – klíč pro remote vkládání image</li>
+          <li>
+            ve VS Code přes Dockerfile build image do Azure, typicky po
+            <code>az login</code>
+          </li>
+          <li>Kubernetes Services → vytvořit Kubernetes cluster</li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Azure Functions</h2>
+
+        <p>
+          <strong>Azure Functions</strong> = serverless. Nemusím řešit server
+          jako takový.
+        </p>
+        <p><strong>Cold start</strong> záleží na hosting plánu.</p>
+
+        <ul>
+          <li><strong>trigger</strong> – spouští funkci</li>
+          <li>
+            <strong>bindings</strong> – spojení funkce s Azure resource,
+            například zápis, spuštění něčeho, výpočet nebo reakce na event
+          </li>
+        </ul>
+
+        <p>
+          <strong>Durable Function</strong> je jako dirigent, který řídí, kdy a
+          jak se jednotlivé Azure Functions spustí.
+        </p>
+
+        <h3>V Azure</h3>
+        <ul>
+          <li>Function → Create</li>
+          <li>App Service Plan – infrastruktura, na které funkce běží</li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Networking</h2>
+
+        <ul>
+          <li>
+            <strong>VNets</strong> – virtual networks. Dostanu rozsah IP adres,
+            tedy address space / address range.
+          </li>
+          <li>
+            <strong>Subnets</strong> – VNet se dělí na více subnetů. Je to část
+            IP rozsahu z VNetu. Subnety spolu mohou defaultně komunikovat, VNety
+            defaultně ne.
+          </li>
+          <li><strong>Load Balancer</strong></li>
+          <li><strong>Application Gateway</strong></li>
+        </ul>
+
+        <h3>NSG</h3>
+        <p>
+          <strong>Network Security Group</strong> – hlídá inbound a outbound
+          pravidla, tedy takový firewall.
+        </p>
+
+        <ul>
+          <li>
+            <strong>inbound rules</strong> – tady se například nastavuje RDP
+            port
+          </li>
+          <li><strong>outbound rules</strong></li>
+        </ul>
+
+        <p>NSG můžu spojit třeba se subnetem.</p>
+
+        <h3>Peering</h3>
+        <p>
+          Dvě VNet mohou komunikovat spolu. Není to zdarma, typicky centy za GB.
+        </p>
+        <p>Musím jít do každé VNet a přidat peering.</p>
+
+        <h3>Network Watcher</h3>
+        <p>
+          Je síťový diagnostický a monitorovací nástroj. Sleduje a analyzuje
+          provoz mezi sítěmi, subnety a virtuálními stroji, včetně provozu mezi
+          různými VNETy přes peering. Umí zobrazit i topologii sítě.
+        </p>
+
+        <h3>Windows Admin Center (WAC)</h3>
+        <p>Správa VM přes prohlížeč.</p>
+
+        <h3>Service Endpoint a Private Link</h3>
+        <ul>
+          <li>
+            <strong>Service Endpoint</strong> – komunikace VM a resource
+            neprobíhá po internetu, ale po Azure backbone.
+          </li>
+          <li>funguje jen pokud jsou VNet i služba ve stejném regionu</li>
+          <li>
+            <strong>Private Link</strong> – v podstatě Service Endpoint plus
+            privátní IP adresa služby uvnitř tvé sítě
+          </li>
+        </ul>
+
+        <h3>Zabezpečení přístupu k VM</h3>
+        <ul>
+          <li>
+            <strong>JIT access</strong> – dočasný, omezený a auditovaný přístup
+          </li>
+          <li><strong>VPN</strong> – omezení například na IP</li>
+          <li>
+            <strong>Jumpbox</strong> – speciální VM v Azure, které otevírá
+            jediný port směrem ven; přes něj se pak připojuji na ostatní VM,
+            které nemají otevřený port ven
+          </li>
+          <li>
+            <strong>Bastion</strong> – jumpbox od Azure. Jednodušší a
+            bezpečnější, ale dražší
+          </li>
+        </ul>
+
+        <h3>Load Balancer vs Application Gateway</h3>
+        <p>
+          <strong>Load Balancer</strong> distribuuje požadavky mezi VM podle
+          health probes.
+        </p>
+
+        <ul>
+          <li>
+            <strong>Basic</strong> – zdarma, jedna zóna, jen veřejné IP, omezený
+            scale, omezená podpora scale set VM; vhodné spíš jen na vývoj a
+            testy
+          </li>
+          <li><strong>Standard</strong> – placený, funguje napříč zónami</li>
+        </ul>
+
+        <p>
+          <strong>Application Gateway</strong> – load balancer plus reverse
+          proxy, která rozumí HTTP/HTTPS provozu. Má i Web Application Firewall
+          a může obsluhovat více backendů ve stejné VNet.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Databáze</h2>
+
+        <ul>
+          <li>
+            <strong>databáze na VM</strong> – musím se starat o všechno sám
+          </li>
+          <li><strong>Azure SQL</strong></li>
+        </ul>
+
+        <h3>Azure SQL</h3>
+        <ul>
+          <li>
+            <strong>Azure SQL Database</strong> – jedna databáze na serveru jako
+            služba, tedy PaaS
+          </li>
+          <li><strong>Provisioned</strong> – stálý, rezervovaný výkon</li>
+          <li><strong>Serverless</strong> – pay-as-you-go</li>
+          <li>
+            <strong>Elastic Pool</strong> – více databází na jednom serveru,
+            sdílený výkon
+          </li>
+          <li>hodí se, když mají různé databáze rozdílné peaky</li>
+          <li>
+            <strong>Managed Instance</strong> – podpora věcí, které znáš z
+            on-premise SQL Serveru, vhodné třeba při migraci
+          </li>
+        </ul>
+
+        <p>
+          Nastavení otevřenosti řeším přes firewall a připojení přes connection
+          string.
+        </p>
+
+        <h3>Cosmos DB</h3>
+        <p>NoSQL databáze s velmi dobrým výkonem.</p>
+
+        <ul>
+          <li>přes různá API rozhraní, například SQL nebo Mongo</li>
+          <li>
+            <strong>consistency level</strong> – jak rychle jsou data
+            synchronizovaná mezi regiony a jaký může být lag
+          </li>
+          <li>
+            vytvořit account → potom databázi → Data Explorer → new container
+          </li>
+        </ul>
+
+        <h3>Azure Database for MySQL</h3>
+        <p>
+          Nemám přístup k OS, jen k databázi. Je to PaaS. Azure řeší zálohy a
+          škálování.
+        </p>
+
+        <ul>
+          <li><strong>Azure Database for MySQL – Flexible Server</strong></li>
+          <li>
+            <strong>MySQL Server – Azure Arc</strong> – napojení na on-premise
+            databázi se správou a monitoringem přes Azure
+          </li>
+          <li>podobně i PostgreSQL a další</li>
+        </ul>
+
+        <h3>Azure Storage</h3>
+        <p>Blobs, Files, Queues, Tables, Disks.</p>
+
+        <ul>
+          <li><strong>blob</strong> – soubory</li>
+          <li><strong>file</strong> – sdílené soubory</li>
+          <li><strong>queues</strong> – messaging</li>
+          <li><strong>tables</strong></li>
+          <li><strong>disks</strong> – disky VM</li>
+        </ul>
+
+        <p>V Azure: Storage Account → Add Container.</p>
+
+        <ul>
+          <li>
+            připojení přes connection string, key nebo Shared Access Signature
+          </li>
+          <li>mohu nastavit CDN, pravidla pro archivaci a mazání</li>
+          <li>mohu použít desktop Azure Storage Explorer</li>
+        </ul>
+
+        <h3>Azure Redis</h3>
+        <p>Rychlá distribuovaná in-memory cache. Data jsou jen v RAM.</p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Messaging</h2>
+
+        <h3>Azure Storage Queue</h3>
+        <p>
+          Jednoduchá fronta. Levné a jednoduché úkoly, například e-maily nebo
+          notifikace.
+        </p>
+        <ul>
+          <li>max size 64 KB</li>
+          <li>create / send / receive</li>
+        </ul>
+
+        <h3>Azure Service Bus</h3>
+        <p>
+          Enterprise message broker pro komplexní integrace, routing, transakce
+          a topic/subscription model.
+        </p>
+        <ul>
+          <li>posílání dat, příkazů nebo requestů</li>
+          <li>consumer zprávu zpracuje, například objednávku</li>
+          <li>drží pořadí ve frontě</li>
+          <li>dead-letter queue</li>
+        </ul>
+
+        <h3>Azure Event Grid</h3>
+        <p>Eventing, tedy notifikace o změnách. „Něco se stalo.“</p>
+        <ul>
+          <li>publisher → event source → event grid topic → event handler</li>
+          <li>nedrží pořadí ve frontě</li>
+        </ul>
+
+        <h3>Azure Event Hub</h3>
+        <p>
+          Datový streaming. Obrovské množství dat, například telemetrie, IoT,
+          logy nebo senzory.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Azure AD / Azure Entra</h2>
+
+        <p>Řeší práva uživatelů, role a skupiny.</p>
+
+        <h3>Typy autentizace</h3>
+        <ul>
+          <li>něco, co znáš</li>
+          <li>něco, co máš</li>
+          <li>něco, co jsi</li>
+        </ul>
+
+        <p>
+          <strong>Security Defaults</strong> – přednastavené bezpečnostní
+          mechanismy, například MFA.
+        </p>
+
+        <h3>RBAC</h3>
+        <p>
+          <strong>Role Based Access Control</strong> – uživatel má roli a role
+          určuje, co může dělat.
+        </p>
+
+        <ul>
+          <li><strong>Owner</strong> – může dělat vše v daném scope</li>
+          <li><strong>Reader</strong> – jen čtení</li>
+          <li><strong>Contributor</strong> – může dělat vše kromě přístupů</li>
+        </ul>
+
+        <p>
+          Nastavení: <strong>Access Control (IAM)</strong> → Role Assignments.
+        </p>
+
+        <h3>Managed Identity</h3>
+        <p>
+          Každá aplikace může mít zapnutou identitu, aby se mohla bezpečně
+          autentizovat vůči jiným Azure službám.
+        </p>
+
+        <h3>Azure AD B2C</h3>
+        <p>
+          Azure Active Directory Business-to-Consumer. Používá se pro
+          přihlašování běžných uživatelů, tedy zákazníků, klientů, občanů nebo
+          studentů, do mojí aplikace.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Monitoring</h2>
+
+        <p>Monitoring section v menu:</p>
+        <ul>
+          <li>metriky</li>
+          <li>logy</li>
+          <li>alerty – custom notifikace</li>
+        </ul>
+
+        <h3>Log Analytics Workspace</h3>
+        <ul>
+          <li>vytvořím Log Analytics Workspace</li>
+          <li>vyberu scope, tedy resource</li>
+          <li>
+            v resource musím nastavit Activity Logs → Export Activity Logs → Add
+            Diagnostic Settings
+          </li>
+          <li>tím pošlu logy i do vytvořeného Analytics Workspace</li>
+        </ul>
+
+        <p>Logs v menu řeší totéž, ale pro konkrétní resource.</p>
+
+        <ul>
+          <li><strong>Insights</strong> – třeba Application Insights</li>
+          <li>
+            <strong>Monitor</strong> – všechny metriky, logy, insights a podobně
+            v předplatném
+          </li>
+          <li>
+            <strong>Application Insights</strong> – například Availability test
+            dostupnosti aplikace
+          </li>
+        </ul>
+
+        <h3>Tag</h3>
+        <p>
+          Tagy jsou kvůli organizaci, správě nákladů a automatizaci. Je to
+          přiřazení <code>key:value</code> k resource.
+        </p>
+      </section>
+
+      <section class="notes-section">
+        <h2>Security</h2>
+
+        <p>Security = identita mezi resources a obecně zabezpečení přístupů.</p>
+
+        <ul>
+          <li>
+            <strong>VM</strong> – otevřít jen porty, které chci, ideálně jen pro
+            konkrétní IP, případně přes Bastion
+          </li>
+          <li><strong>VNet</strong> – NSG, peering</li>
+          <li>
+            <strong>DB</strong> – šifrování, VNet připojení, public/private
+            endpoint, firewall rules
+          </li>
+          <li>
+            <strong>App Service</strong> – nevystavovat přímo internetu, použít
+            Application Gateway, Entra AD a MFA
+          </li>
+        </ul>
+
+        <h3>Key Vault</h3>
+        <p>Do Key Vaultu si ukládám secrets, klíče a další citlivé věci.</p>
+        <p>Mohu nastavit start i expiraci klíčů.</p>
+        <p>Typicky si nastavím roli <code>Vault Secrets Officer</code>.</p>
+
+        <pre><code>Name: ConnectionStrings--BooksDb
+Value: default connection string value</code></pre>
+
+        <pre><code>"KeyVault": &#123;
+  "BaseUrl": "https://my-keyvault.vault.azure.net/"
+&#125;</code></pre>
+
+        <p>
+          V <code>appsettings</code> si dám Key Vault URL a v
+          <code>Program.cs</code> to načtu a zaregistruji.
+        </p>
+        <p>Takhle je to hlavně pro cloudové Azure aplikace.</p>
+
+        <h3>Defender for Cloud</h3>
+        <p>Dříve Security Center, dnes Defender for Cloud.</p>
+
+        <ul>
+          <li><strong>recommendations</strong> – doporučení</li>
+          <li>
+            <strong>inventory</strong> – resources, na které se Defender dívá
+            podle předplatného
+          </li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Disaster Recovery</h2>
+
+        <p>
+          <strong>DR = Disaster Recovery</strong> – plán pro případ, kdy se
+          kompletně zavře region.
+        </p>
+
+        <ul>
+          <li>
+            <strong>RPO</strong> – tolerance ztráty dat, tedy kolik dat ztratím
+            za poslední čas od replikace
+          </li>
+          <li><strong>RTO</strong> – za jak dlouho naskočí služby</li>
+        </ul>
+
+        <h3>Směrování provozu při DR</h3>
+        <ul>
+          <li><strong>Traffic Manager</strong> – starší DNS-based směrování</li>
+          <li>
+            <strong>Front Door</strong> – moderní globální edge brána, CDN,
+            nejbližší zdroj; typicky Front Door → App Gateway → Resource
+          </li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Náklady v Azure</h2>
+
+        <p>
+          <strong>Azure Cost Management</strong> – faktury, platby za služby,
+          predikce, kolik budu platit.
+        </p>
+
+        <h3>Azure Policy</h3>
+        <p>
+          Služba v Microsoft Azure, která slouží k automatickému řízení a
+          vynucování pravidel.
+        </p>
+
+        <ul>
+          <li>například každý Storage Account musí mít zapnuté šifrování</li>
+          <li>Public IP adresy se nesmí vytvářet</li>
+        </ul>
+      </section>
+
+      <section class="notes-section">
+        <h2>Obecně</h2>
+
+        <ul>
+          <li>
+            <strong>Subscription</strong> – Settings → Resource Providers –
+            registrace služeb pro danou subscription
+          </li>
+          <li>
+            <strong>VM</strong> – když ji stopnu, typicky neplatím compute; jiné
+            věci ale platit můžu dál
+          </li>
+          <li><strong>App Service</strong> – neplatím jen když ho smažu</li>
+        </ul>
+
+        <h3>Další služby</h3>
+        <ul>
+          <li>
+            <strong>IoT Hub</strong> – message broker mezi miliony zařízení a
+            cloudovou aplikací
+          </li>
+          <li>
+            <strong>Notification Hub</strong> – posílání notifikací na mobilní
+            zařízení, weby a aplikace
+          </li>
+          <li>
+            <strong>Azure Arc</strong> – umožňuje propojit on-premise nebo jiné
+            cloudy
+          </li>
+          <li>
+            <strong>Azure Advisor</strong> – osobní konzultant, který analyzuje
+            prostředí a dává doporučení na výkon, optimalizace a náklady
+          </li>
+          <li>
+            <strong>Advisor Score</strong> – celkové zdravotní skóre prostředí v
+            procentech
+          </li>
+        </ul>
+      </section>
+    </div>
   </div>
   <app-footer-bar></app-footer-bar>
 </div>
