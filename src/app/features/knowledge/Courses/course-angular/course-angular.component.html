@@ -5,5 +5,702 @@
       <h1 class="course-page__title">Angular - The Complete Guide</h1>
     </section>
   </div>
+
+  <div class="course-page__content">
+    <section class="notes-section">
+      <h2>Input / Output / Signály</h2>
+
+      <h3>Input</h3>
+      <pre><code>&#64;Input() result: number;</code></pre>
+      <p>Předání hodnoty potomkovi.</p>
+
+      <p>Nově přes signály:</p>
+      <pre><code>results = input&lt;number&gt;();
+title = input.required&lt;string&gt;();</code></pre>
+
+      <p>
+        <code>input.required</code> znamená, že hodnota musí být dodaná v
+        šabloně.
+      </p>
+
+      <pre><code>&lt;app-results [results]="calcResults"&gt;&lt;/app-results&gt;</code></pre>
+
+      <h3>Output</h3>
+      <pre><code>&#64;Output() calculate = new EventEmitter&lt;number&gt;();</code></pre>
+      <p>Předání události nebo hodnoty rodiči.</p>
+
+      <p>Nově:</p>
+      <pre><code>calculate = output&lt;number&gt;();</code></pre>
+
+      <pre><code>onSubmit() &#123;
+  this.calculate.emit(42);
+&#125;</code></pre>
+
+      <pre><code>&lt;app-user-input (calculate)="onCalculateInvestmentResults($event)"&gt;&lt;/app-user-input&gt;</code></pre>
+
+      <h3>Two-way binding</h3>
+      <pre><code>[(ngModel)]="propertyInModel"</code></pre>
+      <p>Two-way binding mezi šablonou a modelem.</p>
+
+      <p>Nově lze použít i model signál:</p>
+      <pre><code>value = model&lt;string&gt;();</code></pre>
+
+      <h3>Computed</h3>
+      <pre><code>property = computed(() =&gt; this.signal())</code></pre>
+      <p>
+        Díky <code>computed</code> se hodnota přepočítá vždy, když se změní
+        signal uvnitř.
+      </p>
+
+      <h3>Readonly signal</h3>
+      <pre><code>const allTasks = tasks.asReadonly();</code></pre>
+      <p>Readonly pohled. Převede writable signal na readonly signal.</p>
+
+      <h3>Update a mutate</h3>
+      <pre><code>tasks.update((oldValue) =&gt; oldValue + newValue);</code></pre>
+      <p>Updatuje signal. Dostanu starou hodnotu a vracím novou referenci.</p>
+
+      <pre><code>todos.mutate(arr =&gt; arr.push('new task'));</code></pre>
+      <p>Změní obsah pole bez nové reference. Používat opatrně.</p>
+
+      <h3>Signal z Observable</h3>
+      <pre><code>tasks = selectSignal(this.store.select(selectTasks));</code></pre>
+      <p>Readonly signal z Observable, speciálně pro NgRx Store.</p>
+
+      <pre><code>tasks = toSignal(this.store.select(selectTasks), &#123; initialValue: [] &#125;);</code></pre>
+      <p>Signal z Observable. Je potřeba mít initial value.</p>
+    </section>
+
+    <section class="notes-section">
+      <h2>ng-content</h2>
+
+      <pre><code>&lt;ng-content select=".icon"&gt;&lt;/ng-content&gt;</code></pre>
+      <p>
+        Mohu sem vložit obsah z rodiče. Přes <code>select</code> vybírám přesně,
+        co se má vložit.
+      </p>
+
+      <pre><code>&lt;span class="icon"&gt;→&lt;/span&gt;</code></pre>
+
+      <pre><code>&lt;ng-content select="input, textarea"&gt;&lt;/ng-content&gt;</code></pre>
+      <p>Mohu vybrat i více typů prvků.</p>
+
+      <h3>Selector komponenty / direktivy</h3>
+      <pre><code>selector: 'button[appButton]'</code></pre>
+      <p>
+        Pak použiji button s atributem <code>appButton</code>, aby v DOM nebylo
+        něco jako vlastní obal navíc.
+      </p>
+
+      <h3>Template reference variable</h3>
+      <pre><code>#titleInput</code></pre>
+      <p>
+        Template reference variable. Mohu ji použít v šabloně nebo poslat do
+        metody.
+      </p>
+    </section>
+
+    <section class="notes-section">
+      <h2>HTML binding</h2>
+
+      <pre><code>&lt;div [class.status]="currentStatus === 'offline'"&gt;&lt;/div&gt;</code></pre>
+      <p>Když je podmínka true, přidá se class <code>status</code>.</p>
+
+      <h3>Dynamické přiřazení tříd</h3>
+      <pre><code>&lt;div
+  [class]="&#123;
+    status: true,
+    'status-online': currentStatus === 'online',
+    'status-offline': currentStatus === 'offline',
+    'status-unknown': currentStatus === 'unknown'
+  &#125;"
+&gt;&lt;/div&gt;</code></pre>
+
+      <p>Pomlčka v názvu class se píše do uvozovek.</p>
+    </section>
+
+    <section class="notes-section">
+      <h2>Lifecycle</h2>
+
+      <ul>
+        <li>
+          <strong>ngOnInit</strong> – po constructoru, když už jsou
+          inicializované inputy a další věci
+        </li>
+        <li><strong>ngOnChanges</strong> – při změně inputů</li>
+        <li>
+          <strong>ngDoCheck</strong> – při každé kontrole změn; moc se
+          nedoporučuje, protože se spouští často
+        </li>
+        <li><strong>ngOnDestroy</strong> – než je komponenta zničena</li>
+      </ul>
+
+      <h3>Novější přístup přes DestroyRef</h3>
+      <pre><code>private destroyRef = inject(DestroyRef);
+
+this.destroyRef.onDestroy(() =&gt; &#123;
+  // něco udělej při zničení komponenty
+&#125;);</code></pre>
+
+      <h3>ViewChild</h3>
+      <pre><code>&#64;ViewChild('form') form?: ElementRef&lt;HTMLFormElement&gt;;</code></pre>
+      <p>
+        Vyberu ze šablony prvek do proměnné. Obecně spíš nepoužívat zbytečně,
+        protože to obchází běžný Angular přístup.
+      </p>
+
+      <p>Od Angular 17 nově:</p>
+      <pre><code>private form = viewChild.required&lt;ElementRef&lt;HTMLFormElement&gt;&gt;('form');</code></pre>
+      <p>Tohle vrací signal-like přístup.</p>
+
+      <h3>effect</h3>
+      <pre><code>effect(() =&gt; &#123;
+  console.log('Counter je teď:', this.counter());
+&#125;);</code></pre>
+      <p>
+        Spustí se vždy, když se změní signal použitý uvnitř. Často se dává do
+        constructoru.
+      </p>
+    </section>
+
+    <section class="notes-section">
+      <h2>Direktivy</h2>
+
+      <p>Direktiva = přidání vlastností nebo chování prvku.</p>
+
+      <h3>Custom attribute directive</h3>
+      <pre><code>&#64;Directive(&#123;
+  selector: 'a[appSafeLink]',
+  standalone: true,
+  host: &#123;
+    '(click)': 'onConfirmLeavePage($event)'
+  &#125;
+&#125;)</code></pre>
+
+      <h3>Structural directive</h3>
+      <p>Například <code>*ngIf</code>. Mění DOM.</p>
+      <p><code>*ngIf</code> se interně překládá na <code>ng-template</code>.</p>
+    </section>
+
+    <section class="notes-section">
+      <h2>Pipes</h2>
+
+      <p>Pipes slouží pro formátování a transformaci hodnot v šablonách.</p>
+
+      <pre><code>&#64;Pipe(&#123;
+  name: 'temp',
+  standalone: true
+&#125;)
+export class TemperaturePipe implements PipeTransform &#123;
+  transform(value: number) &#123;
+    return value;
+  &#125;
+&#125;</code></pre>
+    </section>
+
+    <section class="notes-section">
+      <h2>Services</h2>
+
+      <p>Service = logika pro více komponent.</p>
+
+      <pre><code>&#64;Injectable(&#123;
+  providedIn: 'root'
+&#125;)
+export class TasksService &#123;
+&#125;</code></pre>
+
+      <p>
+        <code>providedIn: 'root'</code> znamená, že službu mohu injectovat
+        kdekoliv v aplikaci.
+      </p>
+      <p>
+        Další scope může být třeba konkrétní komponenta nebo jiný injector
+        scope.
+      </p>
+    </section>
+
+    <section class="notes-section">
+      <h2>Change Detection</h2>
+
+      <p>Angular standardně používá <code>zone.js</code>.</p>
+
+      <ul>
+        <li>
+          v default režimu Angular kontroluje změny při různých událostech
+        </li>
+        <li>v debug režimu se některé věci mohou tvářit, že běží 2×</li>
+      </ul>
+
+      <h3>Vyjmutí z change detection</h3>
+      <pre><code>private zone = inject(NgZone);
+
+this.zone.runOutsideAngular(() =&gt; &#123;
+  // kód mimo Angular change detection
+&#125;);</code></pre>
+
+      <h3>OnPush</h3>
+      <p>Do komponenty mohu dát <code>ChangeDetectionStrategy.OnPush</code>.</p>
+      <p>
+        Pak reaguje hlavně na změnu inputu, event nebo ruční označení změny.
+      </p>
+
+      <pre><code>ChangeDetectorRef.markForCheck()
+ChangeDetectorRef.detectChanges()</code></pre>
+
+      <h3>Signály</h3>
+      <p>
+        Pokud komponenta používá hlavně signály, změny se vyhodnocují přes ně.
+      </p>
+      <p>
+        Od novějších verzí Angularu jde jít víc směrem bez <code>zone.js</code>.
+      </p>
+    </section>
+
+    <section class="notes-section">
+      <h2>RxJS</h2>
+
+      <p>RxJS = observables.</p>
+
+      <pre><code>import &#123; map, tap, catchError, of &#125; from 'rxjs';</code></pre>
+
+      <ul>
+        <li>
+          <strong>subscribe()</strong> – přihlásím se k odběru Observable, nebo
+          to převedu přes <code>toSignal</code>
+        </li>
+        <li><strong>pipe()</strong> – dovolí řetězit operátory</li>
+      </ul>
+
+      <h3>Operátory</h3>
+      <pre><code>map(a =&gt; a * 2)</code></pre>
+      <p>
+        Podobné jako <code>select</code> v C#. Nemění původní data, vrací novou
+        hodnotu.
+      </p>
+
+      <pre><code>tap(v =&gt; console.log('Before map:', v))</code></pre>
+      <p>Nemění data, jen na ně „koukne“ a provede vedlejší akci.</p>
+
+      <pre><code>catchError((err) =&gt; throwError(() =&gt; new Error('Error happened')))</code></pre>
+      <p>Když nastane chyba, vyhodí novou chybu s vlastním textem.</p>
+
+      <pre><code>takeUntilDestroyed(this.destroyRef)</code></pre>
+      <p>
+        Automatický unsubscribe při zničení komponenty. U signalů si to Angular
+        většinou řeší sám.
+      </p>
+
+      <pre><code>of(value)</code></pre>
+      <p>Udělá z hodnoty Observable a emituje ji.</p>
+
+      <h3>Subjecty</h3>
+      <p>
+        Subject je speciální druh Observable, který je zároveň Observer. Hodnoty
+        emituji ručně přes <code>.next()</code>.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Subject</strong> – nic nedrží, jen emituje, co pošlu. Nový
+          subscriber nedostane staré hodnoty.
+        </li>
+        <li>
+          <strong>BehaviorSubject</strong> – drží poslední hodnotu a novému
+          subscriberovi ji hned pošle.
+        </li>
+        <li>
+          <strong>ReplaySubject</strong> – drží posledních N hodnot a pošle je
+          novému subscriberovi.
+        </li>
+        <li>
+          <strong>AsyncSubject</strong> – emituje až poslední hodnotu při
+          dokončení přes <code>complete()</code>.
+        </li>
+      </ul>
+    </section>
+
+    <section class="notes-section">
+      <h2>NgRx</h2>
+
+      <p>NgRx = state management solution.</p>
+
+      <pre><code>ng add &#64;ngrx/store</code></pre>
+
+      <p>V bootstrap konfiguraci typicky:</p>
+      <pre><code>provideStore(...)
+provideRouterStore()
+provideStoreDevtools()
+provideEffects([...])</code></pre>
+
+      <h3>Mapovací strategie</h3>
+      <ul>
+        <li><strong>mergeMap</strong> – pustí všechny requesty zároveň</li>
+        <li><strong>concatMap</strong> – pustí je postupně za sebou</li>
+        <li>
+          <strong>switchMap</strong> – zruší předchozí a nechá jen poslední
+        </li>
+        <li>
+          <strong>exhaustMap</strong> – pustí první a další ignoruje, dokud
+          nedoběhne
+        </li>
+      </ul>
+    </section>
+
+    <section class="notes-section">
+      <h2>HTTP Requests</h2>
+
+      <pre><code>private httpClient = inject(HttpClient);</code></pre>
+      <p>
+        Angular <code>HttpClient</code>. Je potřeba ho providnout, typicky v
+        <code>main.ts</code>.
+      </p>
+
+      <pre><code>this.httpClient.get&lt;any&gt;('http://localhost:3000/places')
+  .subscribe(&#123;
+    error: (err) =&gt; &#123;
+      this.error.set(err);
+    &#125;,
+    next: (places) =&gt; &#123;
+      this.places.set(places);
+    &#125;,
+    complete: () =&gt; this.isFetching.set(false)
+  &#125;);</code></pre>
+
+      <p>
+        Mohu přidat interceptor, například na auth hlavičku, logování a podobně.
+      </p>
+    </section>
+
+    <section class="notes-section">
+      <h2>Forms</h2>
+
+      <h3>Základní submit</h3>
+      <pre><code>&lt;form (ngSubmit)="onSubmit()"&gt;&lt;/form&gt;</code></pre>
+      <p><code>(ngSubmit)</code> přepíše defaultní HTML odeslání formuláře.</p>
+
+      <h3>Stavy polí</h3>
+      <ul>
+        <li>
+          <strong>pristine</strong> – pole se ještě nezměnilo od svého
+          inicializačního stavu
+        </li>
+        <li>
+          <strong>touched / untouched</strong> – uživatel na pole klikl /
+          neklikl
+        </li>
+        <li>
+          <strong>dirty</strong> – uživatel změnil hodnotu pole oproti původní
+        </li>
+      </ul>
+
+      <h3>1) Template-driven forms</h3>
+      <pre><code>&lt;form #form="ngForm" (ngSubmit)="onSubmit(form)"&gt;&lt;/form&gt;</code></pre>
+      <p>
+        Méně používané. Inputy mají <code>name</code> a <code>ngModel</code>.
+      </p>
+      <p>
+        Importy: <code>FormsModule</code>. Validaci dávám přes atributy nebo
+        direktivy v šabloně.
+      </p>
+
+      <h3>2) Reactive Forms</h3>
+      <p>
+        Udělám <code>FormGroup</code> a jednotlivé prvky
+        <code>FormControl</code>, pak je nabinduji do šablony.
+      </p>
+      <p>Importy: <code>ReactiveFormsModule</code>.</p>
+
+      <pre><code>form = new FormGroup(&#123;
+  email: new FormControl(''),
+  password: new FormControl&lt;string | null&gt;(''),
+  source: new FormArray([
+    new FormControl(false),
+    new FormControl(false)
+  ])
+&#125;);</code></pre>
+
+      <pre><code>&lt;form [formGroup]="form" (ngSubmit)="onSubmit()"&gt;
+  &lt;input id="email" type="email" formControlName="email" /&gt;
+
+  &lt;div formArrayName="source"&gt;
+    &lt;input type="checkbox" formControlName="0" /&gt;
+    &lt;input type="checkbox" formControlName="1" /&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre>
+
+      <p>
+        Ve <code>FormGroup</code> mohu mít i další vnořené
+        <code>FormGroup</code>, aby byla struktura přehledná.
+      </p>
+
+      <h3>Validace</h3>
+      <pre><code>email: new FormControl('', &#123;
+  validators: [Validators.required, Validators.minLength(6)]
+&#125;)</code></pre>
+
+      <p>
+        Pak kontroluji <code>valid</code> nebo <code>invalid</code> na prvku
+        nebo na celém formuláři.
+      </p>
+
+      <h3>AsyncValidator</h3>
+      <p>
+        Asynchronní validační operace, například volání backendu. Vrací
+        Observable.
+      </p>
+
+      <h3>Vlastní validator</h3>
+      <p>
+        Když vrátím <code>null</code>, je to validní. Jinak vracím error objekt.
+      </p>
+
+      <pre><code>function mustContainQuestionMark(control: AbstractControl) &#123;
+  if (control.value?.includes('?')) &#123;
+    return null;
+  &#125;
+
+  return &#123; error: true &#125;;
+&#125;</code></pre>
+
+      <h3>setValue vs patchValue</h3>
+      <ul>
+        <li><strong>setValue()</strong> – nastaví hodnoty pro celý form</li>
+        <li><strong>patchValue()</strong> – mohu nastavit jen část hodnot</li>
+      </ul>
+    </section>
+
+    <section class="notes-section">
+      <h2>Routing</h2>
+
+      <p>V <code>main.ts</code> povolím routing:</p>
+      <pre><code>providers: [provideRouter(routes)]</code></pre>
+
+      <p>Pak definuji routes:</p>
+      <pre><code>export const routes: Routes = [
+  &#123;
+    path: '',
+    component: NoTaskComponent
+  &#125;,
+  &#123;
+    path: 'users/:userId',
+    component: UserTasksComponent,
+    title: 'Title na záložce',
+    children: [
+      &#123;
+        path: '',
+        redirectTo: 'tasks',
+        pathMatch: 'full'
+      &#125;
+    ]
+  &#125;,
+  &#123;
+    path: '**',
+    component: NotFoundComponent
+  &#125;
+];</code></pre>
+
+      <p>V šabloně:</p>
+      <pre><code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre>
+
+      <pre><code>&lt;a [routerLink]="['/users', user()?.id]" routerLinkActive="selected"&gt;&lt;/a&gt;</code></pre>
+
+      <h3>Hodnota z URL v komponentě</h3>
+      <ul>
+        <li>
+          <strong>withComponentInputBinding</strong> – automaticky nabinduje
+          hodnoty z URL do inputu stejného názvu
+        </li>
+        <li>
+          <strong>ActivatedRoute</strong> – ručně si vytáhnu data z
+          <code>paramMap</code>
+        </li>
+      </ul>
+
+      <pre><code>private activatedRoute = inject(ActivatedRoute);</code></pre>
+
+      <p>
+        V child route to není vždy automatické, tam se řeší konfigurace routeru
+        nebo práce s route stromem.
+      </p>
+
+      <h3>Navigace</h3>
+      <pre><code>&lt;a routerLink="../"&gt;Cancel&lt;/a&gt;</code></pre>
+      <p>Přesun o úroveň výš.</p>
+
+      <pre><code>private router = inject(Router);
+
+this.router.navigate(['/users', this.userId(), 'tasks']);</code></pre>
+
+      <h3>Route Guards</h3>
+      <p>Dávají se do nastavení route.</p>
+
+      <ul>
+        <li><strong>canMatch</strong></li>
+        <li><strong>canActivate</strong></li>
+        <li><strong>canDeactivate</strong></li>
+      </ul>
+
+      <p>
+        Guard vrací typicky <code>true</code>, <code>false</code> nebo redirect.
+      </p>
+      <p>
+        Když vrátí false nebo redirect, route se nepustí nebo přesměruje jinam.
+      </p>
+    </section>
+
+    <section class="notes-section">
+      <h2>Lazy Loading</h2>
+
+      <p>
+        Lazy loading = kód se nahrává až když je potřeba. Tím stáhnu méně kódu
+        při startu aplikace.
+      </p>
+
+      <h3>1) Route-based lazy loading</h3>
+      <pre><code>loadComponent: () =&gt;
+  import('../tasks/tasks.component').then(mod =&gt; mod.TasksComponent)</code></pre>
+
+      <pre><code>provideRouter(routes, withPreloading(PreloadAllModules))</code></pre>
+      <p>Stáhne hlavní bundle a další části dotahuje postupně.</p>
+
+      <h3>2) Deferrable Views</h3>
+      <p>Od Angular 17.</p>
+
+      <pre><code>&#64;defer (on viewport) &#123;
+  &lt;app-welcome /&gt;
+&#125; &#64;placeholder &#123;
+  &lt;p&gt;We have offer&lt;/p&gt;
+&#125;</code></pre>
+
+      <ul>
+        <li>
+          <strong>on viewport</strong> – načte se, až když se blok dostane do
+          viewportu
+        </li>
+        <li>
+          <strong>on interaction(el)</strong> – až když uživatel klikne nebo
+          fokusne prvek
+        </li>
+        <li><strong>on hover(el)</strong> – při najetí myší</li>
+        <li><strong>on idle</strong> – až když je prohlížeč v klidu</li>
+        <li><strong>on timer(2000)</strong> – po daném čase</li>
+        <li>
+          <strong>on immediate</strong> – hned po prvním renderu, ale pořád jako
+          samostatný chunk
+        </li>
+      </ul>
+    </section>
+
+    <section class="notes-section">
+      <h2>Deployment</h2>
+
+      <pre><code>ng build
+npm run build</code></pre>
+
+      <p>Výstup je ve složce <code>dist</code>.</p>
+
+      <h3>SPA</h3>
+      <p>
+        Jeden <code>index.html</code>, z něj JavaScript a aplikace běží na
+        klientovi. Server řeší hlavně API.
+      </p>
+
+      <h3>SSR</h3>
+      <pre><code>ng add &#64;angular/ssr</code></pre>
+      <p>
+        Na serveru běží Angular kód přes Node.js. Výhoda je rychlejší první
+        render, lepší SEO a menší náročnost na klienta.
+      </p>
+
+      <h3>SSG</h3>
+      <p>
+        Mix. HTML se složí při buildu, hodí se na nedynamické stránky a po
+        spuštění to dál funguje jako SPA.
+      </p>
+    </section>
+
+    <section class="notes-section">
+      <h2>CLI a config soubory</h2>
+
+      <ul>
+        <li>
+          <strong>browserslist</strong> – které prohlížeče podporovat při buildu
+        </li>
+        <li><strong>karma.conf</strong> – konfigurace testů</li>
+        <li>
+          <strong>package-lock.json</strong> – generované podle
+          <code>package.json</code>
+        </li>
+        <li>
+          <strong>package.json</strong> – balíčky, skripty a metadata projektu
+        </li>
+        <li><strong>tsconfig.json</strong> – nastavení TypeScriptu</li>
+        <li>
+          <strong>tsconfig.*.json</strong> – další configy, které rozšiřují
+          základní tsconfig
+        </li>
+        <li>
+          <strong>angular.json</strong> – nastavení aplikace, prefix, project
+          type, global styles, build config a další
+        </li>
+      </ul>
+
+      <pre><code>ng generate component
+ng generate service
+ng generate directive</code></pre>
+    </section>
+
+    <section class="notes-section">
+      <h2>Hints</h2>
+
+      <ul>
+        <li>
+          Jakýkoliv prvek jako FormGroup, FormArray nebo Routes si mohu udělat
+          bokem v metodě a pak ho vrátit tam, kde ho potřebuji.
+        </li>
+        <li>
+          Angular zničí komponentu, když se změní pevná část URL. Když se změní
+          jen dynamická část, tak ji většinou nezničí.
+        </li>
+        <li>Do eager části neimportovat nic z lazy složek.</li>
+        <li>
+          Sdílené věci dávat do shared, například models, enums nebo services.
+        </li>
+      </ul>
+    </section>
+
+    <section class="notes-section">
+      <h2>JS vs C#</h2>
+
+      <ul>
+        <li><strong>map</strong> = <strong>SELECT</strong></li>
+        <li><strong>filter</strong> = <strong>WHERE</strong></li>
+        <li><strong>some</strong> = <strong>Any</strong></li>
+        <li><strong>includes</strong> = <strong>contains</strong></li>
+      </ul>
+
+      <p>
+        <strong>contains</strong> v DOM se používá pro node elementy a vrací
+        <code>true/false</code>, jestli daný node obsahuje jiný node.
+      </p>
+
+      <pre><code>const interval = setInterval(() =&gt; &#123;
+  // něco
+&#125;, 5000);
+
+clearInterval(interval);</code></pre>
+    </section>
+
+    <section class="notes-section">
+      <h2>fieldset</h2>
+
+      <pre><code>&lt;fieldset&gt;&lt;/fieldset&gt;</code></pre>
+      <p>
+        HTML prvek pro seskupení formulářových prvků. Často se hodí jako wrapper
+        třeba pro vnořenou form group.
+      </p>
+    </section>
+  </div>
+
   <app-footer-bar></app-footer-bar>
 </div>

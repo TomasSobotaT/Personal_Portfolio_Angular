@@ -176,6 +176,10 @@ export const HELPERS: HelperCategory[] = [
         url: 'https://azure.microsoft.com/cs-cz',
       },
       {
+        name: 'Azure services overview',
+        url: 'https://azurecharts.com/overview',
+      },
+      {
         name: 'Google Cloud',
         url: 'https://cloud.google.com',
       },
